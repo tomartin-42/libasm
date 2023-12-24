@@ -1,5 +1,24 @@
-ft__strlen: ft__strlen.o
-	gcc -o ft__strlen ft__strlen.o -no-pie
+NAME = libasm.a
 
-ft__strlen.o: ft__strlen.asm
-	nasm -f elf64 -g -F dwarf ft__strlen.asm -l ft__strlen.lst
+SRC = ft__strlen.s
+
+OBJ = $(SRC:.s=.o)
+
+all: $(NAME)
+
+$(OBJ): $(SRC)
+	nasm -f elf64 -o $(OBJ) $(SRC)
+
+$(NAME): $(OBJ)
+	ar src $(NAME) $(OBJ)
+
+clean:
+	rm -f $(OBJ)
+
+fclean:
+	rm -f $(NAME) $(OBJ)
+
+re: fclean all
+
+test: all
+	gcc -o test test.c -L. -l$(NAME) && ./test
