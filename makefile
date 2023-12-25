@@ -21,4 +21,4 @@ fclean:
 re: fclean all
 
 test: all
-	gcc -o test test.c -L. -l$(NAME) && ./test
+	gcc -L. -lasm -o test test.c 

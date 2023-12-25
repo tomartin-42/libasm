@@ -1,14 +1,13 @@
 ;ft__strlen
 section .data
-msg     db "hola", 0
 
 section .bss
 
 section .text
-global  main
+global  _ft__strlen
 
-ft__strlen:
-	mov rbx, msg
+_ft__strlen:
+	mov rbx, rdi
 	mov rax, 0
 
 while:
