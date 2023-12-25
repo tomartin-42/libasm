@@ -3,17 +3,11 @@
 #include <string.h>
 #include <unistd.h>
 
-size_t _ft__strlen(char *str);
+size_t ft_strlen(char *str);
 
-int main(int) {
-  char *len;
-  size_t res_org[3];
-  size_t res_lib[3];
+int main(void) {
+  size_t res_org = strlen("HOLA");
+  size_t res_lib = ft_strlen("HOLA");
 
-  len = "HOLA";
-  for (int i = 0; i < 3; i++) {
-    res_org[i] = strlen(len);
-    res_lib[i] = _ft__strlen(len);
-    printf("%i - %i", res_org[i], res_lib[i]);
-  }
+  printf("%zu - %zu", res_org, res_lib);
 }

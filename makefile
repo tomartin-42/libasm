@@ -21,4 +21,4 @@ fclean:
 re: fclean all
 
 test: all
-	gcc -L. -lasm -o test test.c 
+	gcc -L. -lasm -o test test.c

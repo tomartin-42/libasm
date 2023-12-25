@@ -1,2 +1,0 @@
-break /home/tommy/libasm/ft__strlen.asm:16
-
