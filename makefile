@@ -1,5 +1,8 @@
 NAME = libasm.a
 
+FALGS = -Wall -Werror -Wextra
+NASM_FLAG = -f macho64
+
 SRC = ft__strlen.s
 
 OBJ = $(SRC:.s=.o)
@@ -10,7 +13,7 @@ $(OBJ): $(SRC)
 	nasm -f elf64 -o $(OBJ) $(SRC)
 
 $(NAME): $(OBJ)
-	ar src $(NAME) $(OBJ)
+	ar rcs $(NAME) $(OBJ)
 
 clean:
 	rm -f $(OBJ)
@@ -21,4 +24,4 @@ fclean:
 re: fclean all
 
 test: all
-	gcc -L. -lasm -o test test.c
+	gcc $(FLAGS) -L. -lasm -o test test.c

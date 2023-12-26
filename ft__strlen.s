@@ -4,11 +4,11 @@ section .data
 section .bss
 
 section .text
-global  _ft__strlen
+global  ft__strlen
 
-_ft__strlen:
+ft__strlen:
 	mov rbx, rdi
-	mov rax, 0
+	xor rax, rax
 
 while:
 	cmp byte [rbx], 0
