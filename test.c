@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 
-extern size_t ft__strlen(char *str);
+size_t ft__strlen(char *str);
 
 int main(void) {
   size_t res_org = strlen("HOLA");

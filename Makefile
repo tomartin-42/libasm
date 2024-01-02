@@ -10,7 +10,7 @@ OBJ = $(SRC:.s=.o)
 all: $(NAME)
 
 $(OBJ): $(SRC)
-	nasm -f elf64 -o $(OBJ) $(SRC) -g -l libasm.lst
+	nasm -f elf64 -o $(OBJ) $(SRC)
 
 $(NAME): $(OBJ)
 	ar rcs $(NAME) $(OBJ)
@@ -24,5 +24,4 @@ fclean:
 re: fclean all
 
 test: all
-	#gcc $(FLAGS) -L. -lasm -o test test.c
-	gcc $(FLAGS) -o test test.c -L. -lasm 
+	gcc $(FLAGS) -L. -lasm -o test test.c
