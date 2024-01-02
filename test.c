@@ -3,11 +3,15 @@
 #include <string.h>
 #include <unistd.h>
 
+#define STRLEN(s) printf("%s \t %zu === %zu\n", s, strlen(s), ft__strlen(s));
+
 size_t ft__strlen(char *str);
 
 int main(void) {
-  size_t res_org = strlen("HOLA");
-  size_t res_lib = ft__strlen("HOLA");
-
-  printf("%zu - %zu", res_org, res_lib);
+  printf("ft__strlen------------------\n");
+  STRLEN("HOLA");
+  STRLEN("");
+  STRLEN(" ");
+  STRLEN("\n");
+  printf("end ft__strlen--------------\n");
 }

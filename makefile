@@ -24,5 +24,4 @@ fclean:
 re: fclean all
 
 test: all
-	#gcc $(FLAGS) -L. -lasm -o test test.c
-	gcc $(FLAGS) -o test test.c -L. -lasm 
+	gcc $(FLAGS) -o test test.c -L. -lasm &&  ./test 
