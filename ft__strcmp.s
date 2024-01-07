@@ -15,6 +15,7 @@ loop:
 	cmp al, bl; Check if equal
 	jl  low
 	jg  higth
+	xor rax, rax
 	cmp byte [rdi], 0
 	je  end
 	cmp byte [rsi], 0
