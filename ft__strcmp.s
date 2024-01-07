@@ -10,11 +10,11 @@ ft__strcmp:
 	xor rax, rax
 
 loop:
-	mov rax, [rdi]; Strin one
-	mov rbx, [rsi]; String two
-	sub rax, rbx
-	cmp rax, 0; Check if equal
-	je  end
+	mov al, [rdi]
+	mov bl, [rsi]
+	cmp al, bl; Check if equal
+	jl  low
+	jg  higth
 	cmp byte [rdi], 0
 	je  end
 	cmp byte [rsi], 0
@@ -22,6 +22,14 @@ loop:
 	inc rdi
 	inc rsi
 	jmp loop
+
+low:
+	mov rax, -1
+	jmp end
+
+higth:
+	mov rax, 1
+	jmp end
 
 end:
 	mov rdi, 0
