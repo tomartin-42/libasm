@@ -10,12 +10,12 @@ ft__strlen:
 	mov rbx, rdi
 	xor rax, rax
 
-while:
+loop:
 	cmp byte [rbx], 0
 	je  end
 	inc rbx
 	inc rax
-	jmp while
+	jmp loop
 
 end:
 	mov rdi, 0
