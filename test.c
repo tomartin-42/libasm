@@ -16,7 +16,7 @@ int main(void) {
 
   char buff[20];
 
-  printf("STRLEN*****************************\n");
+  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "STRLEN");
   STRLEN("HOLA");
   STRLEN("");
   STRLEN(" ");
