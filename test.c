@@ -10,8 +10,12 @@
 
 size_t ft__strlen(char *str);
 int ft__strcmp(const char *str1, const char *str2);
+char *ft__strcpy(char *restrict dst, const char *restrict src);
 
 int main(void) {
+
+  char buff[20];
+
   printf("STRLEN*****************************\n");
   STRLEN("HOLA");
   STRLEN("");
@@ -30,4 +34,13 @@ int main(void) {
   STRCMP(" ", "");
   STRCMP("", " ");
   printf("end STRCMP*************************\n");
+  printf("\n");
+  printf("STRCPY**************************\n");
+  printf("('HOLA') %s === %s\n", strcpy(buff, "HOLA"),
+         ft__strcpy(buff, "HOLA"));
+  printf("('') %s === %s\n", strcpy(buff, ""), ft__strcpy(buff, ""));
+  printf("('AAAAAAAAAAAAAAAAAAAAAAAAA') %s === %s\n",
+         strcpy(buff, "AAAAAAAAAAAAAAAAAAAAAAAAA"),
+         ft__strcpy(buff, "AAAAAAAAAAAAAAAAAAAAAAAAA"));
+  printf("end STRCPY*************************\n");
 }
