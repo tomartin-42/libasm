@@ -36,5 +36,5 @@ fclean:
 re: fclean all
 
 test: all
-	gcc $(FLAGS) -o test test.c -L. -lasm 
+	gcc $(FLAGS) -g3 -o test test.c -L. -lasm 
 	./test 

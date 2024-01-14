@@ -20,10 +20,8 @@ int main(void) {
   STRLEN("HOLA");
   STRLEN("");
   STRLEN(" ");
-  STRLEN("\n");
-  printf("end STRLEN************************\n");
   printf("\n");
-  printf("STRCMP**************************\n");
+  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "STRCMP");
   STRCMP("HOLA", "HOLA");
   STRCMP("HOLA1", "HOLA");
   STRCMP("HOLA", "HOLA1");
@@ -33,14 +31,13 @@ int main(void) {
   STRCMP("", "");
   STRCMP(" ", "");
   STRCMP("", " ");
-  printf("end STRCMP*************************\n");
   printf("\n");
-  printf("STRCPY**************************\n");
+  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "STRCPY");
   printf("('HOLA') %s === %s\n", strcpy(buff, "HOLA"),
          ft__strcpy(buff, "HOLA"));
   printf("('') %s === %s\n", strcpy(buff, ""), ft__strcpy(buff, ""));
-  printf("('AAAAAAAAAAAAAAAAAAAAAAAAA') %s === %s\n",
-         strcpy(buff, "AAAAAAAAAAAAAAAAAAAAAAAAA"),
-         ft__strcpy(buff, "AAAAAAAAAAAAAAAAAAAAAAAAA"));
-  printf("end STRCPY*************************\n");
+  printf("('AAAAAAAAAAAAAAAAAA') %s === %s\n",
+         strcpy(buff, "AAAAAAAAAAAAAAAAAA"),
+         ft__strcpy(buff, "AAAAAAAAAAAAAAAAAA"));
+  printf("\n");
 }
