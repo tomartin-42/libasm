@@ -1,2 +1,6 @@
-break main
+break ft__strdup
+break /home/tommy/libasm/test.c:19
+break /home/tommy/libasm/ft__strdup.s:19
+break /home/tommy/libasm/ft__strdup.s:21
+break /home/tommy/libasm/ft__strdup.s:17
 

@@ -8,8 +8,7 @@ else
 	NASM_FLAG = -f elf64
 endif
 
-SRC = ft__strlen.s ft__strcmp.s ft__strcpy.s
-
+SRC = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.s=.o))
 
@@ -18,7 +17,7 @@ all: $(NAME)
 
 $(OBJ_DIR)/%.o: %.s
 	@mkdir -p $(OBJ_DIR)
-	nasm -f elf64 -o $@ $< -g -l $*.lst
+	nasm -f elf64 -o $@ $< -g -l $*.lst 
 
 $(NAME): $(OBJ)
 	ar rcs $(NAME) $(OBJ)
@@ -36,5 +35,4 @@ fclean:
 re: fclean all
 
 test: all
-	gcc $(FLAGS) -g3 -o test test.c -L. -lasm 
-	./test 
+	gcc -no-pie $(FLAGS) -g3 -o test test.c -L. -lasm
