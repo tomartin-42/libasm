@@ -12,11 +12,10 @@ extern malloc
 
 ft__strdup:
 	xor  rax, rax
-	push rdi
+	mov  r9, rdi
 	call ft__strlen
 	inc  rax
-	;mov rdi, rax
-	mov  rdi, 500
+	mov  rdi, rax
 	call malloc
 
 	ret

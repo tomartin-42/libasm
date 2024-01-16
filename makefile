@@ -1,6 +1,8 @@
 NAME = libasm.a
 
-FALGS = -Wall -Werror -Wextra
+CFALGS = -Wall -Werror -Wextra
+
+UNAME := $(shell uname)
 
 ifeq ($(UNAME), Darwin)
 	NASM_FLAG = -f macho64
@@ -35,4 +37,4 @@ fclean:
 re: fclean all
 
 test: all
-	gcc -no-pie $(FLAGS) -g3 -o test test.c -L. -lasm
+	gcc -no-pie $(CFLAGS) -g3 -o test test.c -L. -lasm
