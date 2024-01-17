@@ -1,0 +1,22 @@
+     1                                  ;ft__strlen
+     2                                  section .data
+     3                                  
+     4                                  section .bss
+     5                                  
+     6                                  section .text
+     7                                  global  ft__strlen
+     8                                  
+     9                                  ft__strlen:
+    10 00000000 4889FB                  	mov rbx, rdi
+    11 00000003 4831C0                  	xor rax, rax
+    12                                  
+    13                                  loop:
+    14 00000006 803B00                  	cmp byte [rbx], 0
+    15 00000009 7408                    	je  end
+    16 0000000B 48FFC3                  	inc rbx
+    17 0000000E 48FFC0                  	inc rax
+    18 00000011 EBF3                    	jmp loop
+    19                                  
+    20                                  end:
+    21 00000013 BF00000000              	mov rdi, 0
+    22 00000018 C3                      	ret
