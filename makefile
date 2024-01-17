@@ -4,10 +4,13 @@ CFALGS = -Wall -Werror -Wextra
 
 UNAME := $(shell uname)
 
+
 ifeq ($(UNAME), Darwin)
 	NASM_FLAG = -f macho64
+	SRC_DIR = ./mac
 else
 	NASM_FLAG = -f elf64
+	SRC_DIR = ./linux
 endif
 
 SRC = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s
