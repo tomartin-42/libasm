@@ -11,18 +11,29 @@ ifeq ($(UNAME), Darwin)
 else
 	NASM_FLAG = -f elf64
 	SRC_DIR = ./linux
+	LOGO = $(L_BANNER)
 endif
 
-SRC = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s
+
+SRC_FILES = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s
+SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJ_DIR = obj
-OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.s=.o))
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.s=.o))
 
 all: $(NAME) 
+	@echo "██╗     ██╗██████╗  █████╗ ███████╗███╗   ███╗"
+	@echo "██║     ██║██╔══██╗██╔══██╗██╔════╝████╗ ████║"
+	@echo "██║     ██║██████╔╝███████║███████╗██╔████╔██║"
+	@echo "██║     ██║██╔══██╗██╔══██║╚════██║██║╚██╔╝██║"
+	@echo "███████╗██║██████╔╝██║  ██║███████║██║ ╚═╝ ██║"
+	@echo "╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝"
+	@echo "By Tomartin in 42Madrid"
 	@echo "compiling libasm.a"
 
-$(OBJ_DIR)/%.o: %.s
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.s
 	@mkdir -p $(OBJ_DIR)
-	nasm -f elf64 -o $@ $< -g -l $*.lst 
+	nasm -f elf64 -o $@ $< -g -l $(OBJ_DIR)/$*.lst
+
 
 $(NAME): $(OBJ)
 	ar rcs $(NAME) $(OBJ)
@@ -41,3 +52,9 @@ re: fclean all
 
 test: all
 	gcc -no-pie $(CFLAGS) -g3 -o test test.c -L. -lasm
+
+print:
+	@echo $(SRC)
+	@echo $(SRC_FILES)
+	@echo $(SRC_DIR)
+	@echo $(OBJ)
