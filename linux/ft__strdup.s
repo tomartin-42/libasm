@@ -25,6 +25,7 @@ ft__strdup:
 	ret
 
 end_fail:
+	pop r9
 	xor rax, rax
 	mov rdi, 0
 	ret
