@@ -1,0 +1,5 @@
+Errno in FreeBSD
+  https://github.com/cacharle/libasm_test/issues/2
+
+Syscall table linux
+  https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/

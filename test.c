@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 #include <unistd.h>
 
 #define STRLEN(s) printf("%s \t %zu === %zu\n", s, strlen(s), ft__strlen(s));
@@ -13,6 +14,9 @@ size_t ft__strlen(char *str);
 int ft__strcmp(const char *str1, const char *str2);
 char *ft__strcpy(char *restrict dst, const char *restrict src);
 char *ft__strdup(const char *str);
+ssize_t ft__read(int fd, void *buf, size_t count);
+ssize_t ft__write(int fd, const void *buf, size_t count);
+
 void strdup_test(const char *s) {
   char *res = ft__strdup(s);
   printf("%s - %p === %s - %p \n", s, s, res, res);
@@ -53,4 +57,5 @@ int main(void) {
   strdup_test("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   strdup_test(" ");
   strdup_test("\n");
+  ft__read(10000, buff, 15);
 }
