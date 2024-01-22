@@ -13,6 +13,7 @@ ft_atoi_base:
 	mov  rdi, rsi
 	call .check_base_leng
 	call .check_chars_in_base
+	call .check_repeated_char_in_base
 
 .check_base_leng:
 	call ft__strlen
@@ -32,6 +33,8 @@ ft_atoi_base:
 	je  end_fail
 	inc rdi
 	jmp .check_chars_in_base
+
+.check_repeated_char_in_base
 
 end_fail:
 	pop rsi
