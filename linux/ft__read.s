@@ -8,7 +8,7 @@ global  ft__read
 
 ft__read:
 	mov rax, 0; syscall to read
-	syscal
+	syscall
 	cmp rax, 1
 	jl  error
 

@@ -15,7 +15,7 @@ else
 endif
 
 
-SRC_FILES = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s ft__read.s ft__write.s
+SRC_FILES = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s ft__read.s ft__write.s ft__atoi_base.s
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.s=.o))

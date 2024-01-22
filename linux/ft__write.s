@@ -8,7 +8,7 @@ global  ft__write
 
 ft__write:
 	mov rax, 1; syscall to write
-	syscal
+	syscall
 	cmp rax, 1
 	jl  error
 
