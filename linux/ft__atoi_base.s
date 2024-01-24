@@ -11,11 +11,11 @@ ft__atoi_base:
 	push rdi
 	push rsi
 	mov  rdi, rsi
-	jmp  .check_base_leng
-	mov rdi, rsi
-	jmp .check_chars_in_base
-	mov rdi, rsi
-	jmp check_repeated_char_in_base
+	call .check_base_leng
+	mov  rdi, rsi
+	call .check_chars_in_base
+	mov  rdi, rsi
+	call .check_repeated_char_in_base
 
 .check_base_leng:
 	call ft__strlen
@@ -38,7 +38,7 @@ ft__atoi_base:
 	jmp .check_chars_in_base
 	ret
 
-check_repeated_char_in_base:
+.check_repeated_char_in_base:
 	mov rax, [rdi]
 	cmp al, 0
 	je  return
@@ -48,7 +48,7 @@ check_repeated_char_in_base:
 check_chars:
 	mov bl, [rdi]
 	cmp bl, 0
-	je  check_repeated_char_in_base
+	je  .check_repeated_char_in_base
 	cmp al, bl
 	je  end_fail
 	inc rbx

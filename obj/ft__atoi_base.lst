@@ -1,0 +1,65 @@
+     1                                  section .data
+     2                                  
+     3                                  section .bss
+     4                                  
+     5                                  section .text
+     6                                  global  ft__atoi_base
+     7                                  
+     8                                  extern ft__strlen
+     9                                  
+    10                                  ft__atoi_base:
+    11 00000000 57                      	push rdi
+    12 00000001 56                      	push rsi
+    13 00000002 4889F7                  	mov  rdi, rsi
+    14 00000005 E810000000              	call .check_base_leng
+    15 0000000A 4889F7                  	mov  rdi, rsi
+    16 0000000D E814000000              	call .check_chars_in_base
+    17 00000012 4889F7                  	mov  rdi, rsi
+    18 00000015 E827000000              	call .check_repeated_char_in_base
+    19                                  
+    20                                  .check_base_leng:
+    21 0000001A E8(00000000)            	call ft__strlen
+    22 0000001F 4883F802                	cmp  rax, 2
+    23 00000023 7C39                    	jl   end_fail
+    24 00000025 C3                      	ret
+    25                                  
+    26                                  .check_chars_in_base:
+    27 00000026 4831C0                  	xor rax, rax
+    28 00000029 8A07                    	mov al, [rdi]
+    29 0000002B 3C00                    	cmp al, 0; end of string
+    30 0000002D 7435                    	je  return
+    31 0000002F 3C20                    	cmp al, 32; comp space
+    32 00000031 742B                    	je  end_fail
+    33 00000033 3C2B                    	cmp al, 43; comp +
+    34 00000035 7427                    	je  end_fail
+    35 00000037 3C2D                    	cmp al, 45; comp -
+    36 00000039 7423                    	je  end_fail
+    37 0000003B 48FFC7                  	inc rdi
+    38 0000003E EBE6                    	jmp .check_chars_in_base
+    39 00000040 C3                      	ret
+    40                                  
+    41                                  .check_repeated_char_in_base:
+    42 00000041 488B07                  	mov rax, [rdi]
+    43 00000044 3C00                    	cmp al, 0
+    44 00000046 741C                    	je  return
+    45 00000048 48FFC7                  	inc rdi
+    46 0000004B 4889FB                  	mov rbx, rdi
+    47                                  
+    48                                  check_chars:
+    49 0000004E 8A1F                    	mov bl, [rdi]
+    50 00000050 80FB00                  	cmp bl, 0
+    51                                  	je  .check_repeated_char_in_base
+    51          ******************       error: symbol `check_chars.check_repeated_char_in_base' not defined
+    52 00000053 38D8                    	cmp al, bl
+    53 00000055 7407                    	je  end_fail
+    54 00000057 48FFC3                  	inc rbx
+    55 0000005A EBF2                    	jmp check_chars
+    56                                  
+    57                                  end_fail:
+    58 0000005C 5E                      	pop rsi
+    59 0000005D 5F                      	pop rdi
+    60 0000005E 4831C0                  	xor rax, rax
+    61 00000061 C3                      	ret
+    62                                  
+    63                                  return:
+    64 00000062 C3                      	ret
