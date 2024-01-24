@@ -16,6 +16,8 @@ char *ft__strcpy(char *restrict dst, const char *restrict src);
 char *ft__strdup(const char *str);
 ssize_t ft__read(int fd, void *buf, size_t count);
 ssize_t ft__write(int fd, const void *buf, size_t count);
+int ft__atoi_base(char *str, char *base);
+
 typedef struct s_list {
   void *data;
   struct s_list *next;
@@ -61,5 +63,5 @@ int main(void) {
   strdup_test("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   strdup_test(" ");
   strdup_test("\n");
-  ft__read(10000, buff, 15);
+  printf("FTATOIBASE %d\n", ft__atoi_base("HOLA", "1232"));
 }

@@ -1,6 +1,6 @@
 NAME = libasm.a
 
-CFALGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 UNAME := $(shell uname)
 
@@ -11,7 +11,6 @@ ifeq ($(UNAME), Darwin)
 else
 	NASM_FLAG = -f elf64
 	SRC_DIR = ./linux
-	LOGO = $(L_BANNER)
 endif
 
 
@@ -21,6 +20,11 @@ SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 SRC_BONUS = $(addprefix $(SRC_DIR)/, $(BONUS_FILES))
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.s=.o))
+
+ifdef BONUS
+    SRC += $(SRC_BONUS)
+    OBJ += $(addprefix $(OBJ_DIR)/, $(BONUS_FILES:.s=.o))
+endif
 
 all: $(NAME) 
 	@echo "██╗     ██╗██████╗  █████╗ ███████╗███╗   ███╗"
@@ -40,8 +44,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.s
 $(NAME): $(OBJ)
 	ar rcs $(NAME) $(OBJ)
 
+bonus: 
+	@make BONUS=1
+
 clean:
 	rm -f $(OBJ)
+	@echo "Clean .o!!"
 
 fclean:
 	rm -Rf $(OBJ_DIR)
@@ -56,6 +64,13 @@ test: all
 	gcc -no-pie $(CFLAGS) -g3 -o test test.c -L. -lasm
 
 print:
+	@echo $(SRC)
+	@echo $(SRC_FILES)
+	@echo $(SRC_DIR)
+	@echo $(OBJ)
+
+print_bonus:
+	@make BONUS=1
 	@echo $(SRC)
 	@echo $(SRC_FILES)
 	@echo $(SRC_DIR)
