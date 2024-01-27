@@ -1,3 +1,4 @@
-break ft__atoi_base.s:15
-break /home/tommy/libasm/linux/ft__atoi_base.s:14
+break ft__atoi_base:86
+break /home/tommy/libasm/linux/ft__atoi_base.s:79
+break /home/tommy/libasm/linux/ft__atoi_base.s:62
 

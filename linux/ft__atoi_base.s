@@ -1,5 +1,4 @@
 section .data
-sig     dd 1
 
 section .bss
 
@@ -19,6 +18,7 @@ ft__atoi_base:
 	mov  rdi, rsi
 	check_base_leng: ; check base leng
 	call ft__strlen
+	mov  rdx, rax; save base leng
 	cmp  rax, 2
 	jl   end_fail
 
@@ -59,14 +59,6 @@ calc_number:
 	pop rdi; restore rdi original value rdi "str"
 	mov rbx, 1
 
-mul_sig:
-	cmp  rbx, -1
-	jne  increment
-	imul rbx, rbx, -1
-
-increment:
-	inc rcx
-
 loop:
 	mov al, [rdi + rcx]
 	cmp al, ' '
@@ -85,7 +77,31 @@ loop:
 	je  return
 	cmp al, byte '-'
 	je  mul_sig
-	jmp return
+	cmp al, byte '+'
+	je  increment
+	jmp increment
+	jmp loop
+
+increment:
+	call .inc
+	jmp  loop
+
+.inc:
+	inc rcx
+	ret
+
+mul_sig:
+	call .mul_sig
+	jmp  loop
+
+.mul_sig:
+	imul rbx, rbx, -1
+	call .inc
+	ret
+
+.inc:
+	inc rcx
+	ret
 
 end_fail:
 	pop rsi
