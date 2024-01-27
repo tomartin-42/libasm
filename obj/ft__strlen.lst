@@ -1,0 +1,30 @@
+     1                                  ;ft__strlen
+     2                                  section .data
+     3                                  
+     4                                  section .bss
+     5                                  
+     6                                  section .text
+     7                                  global  ft__strlen
+     8                                  
+     9                                  ft__strlen:
+    10                                  	;    Prolog
+    11 00000000 55                      	push rbp
+    12 00000001 4889E5                  	mov  rbp, rsp
+    13                                  
+    14 00000004 4889FB                  	mov rbx, rdi
+    15 00000007 4831C0                  	xor rax, rax
+    16                                  
+    17                                  loop:
+    18 0000000A 803B00                  	cmp byte [rbx], 0
+    19 0000000D 7408                    	je  end
+    20 0000000F 48FFC3                  	inc rbx
+    21 00000012 48FFC0                  	inc rax
+    22 00000015 EBF3                    	jmp loop
+    23                                  
+    24                                  end:
+    25 00000017 BF00000000              	mov rdi, 0
+    26                                  	;   Epilog
+    27 0000001C 4889EC                  	mov rsp, rbp
+    28 0000001F 5D                      	pop rbp
+    29                                  
+    30 00000020 C3                      	ret

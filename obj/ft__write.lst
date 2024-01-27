@@ -1,0 +1,24 @@
+     1                                  ;ft__write
+     2                                  section .data
+     3                                  
+     4                                  section .bss
+     5                                  
+     6                                  section .text
+     7                                  global  ft__write
+     8                                  
+     9                                  ft__write:
+    10                                  	;    Prolog
+    11 00000000 55                      	push rbp
+    12 00000001 4889E5                  	mov  rbp, rsp
+    13                                  
+    14 00000004 B801000000              	mov rax, 1; syscall to write
+    15 00000009 0F05                    	syscall
+    16 0000000B 4883F801                	cmp rax, 1
+    17 0000000F 7C00                    	jl  error
+    18                                  
+    19                                  error:
+    20                                  	;   Epilog
+    21 00000011 4889EC                  	mov rsp, rbp
+    22 00000014 5D                      	pop rbp
+    23                                  
+    24 00000015 C3                      	ret
