@@ -62,6 +62,7 @@ re: fclean all
 
 test: all
 	gcc -no-pie $(CFLAGS) -g3 -o test test.c -L. -lasm
+	./test
 
 print:
 	@echo $(SRC)
@@ -75,3 +76,5 @@ print_bonus:
 	@echo $(SRC_FILES)
 	@echo $(SRC_DIR)
 	@echo $(OBJ)
+
+a: bonus test

@@ -7,6 +7,10 @@ section .text
 global  ft__strlen
 
 ft__strlen:
+	;    Prolog
+	push rbp
+	mov  rbp, rsp
+
 	mov rbx, rdi
 	xor rax, rax
 
@@ -19,4 +23,8 @@ loop:
 
 end:
 	mov rdi, 0
+	;   Epilog
+	mov rsp, rbp
+	pop rbp
+
 	ret
