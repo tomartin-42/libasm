@@ -80,8 +80,8 @@ loop:
 	cmp  al, byte '-'
 	je   mul_sig
 	cmp  al, byte '+'
-	call .get_char
 	je   increment
+	call .get_char
 	jmp  increment
 	jmp loop
 

@@ -63,5 +63,5 @@ int main(void) {
   strdup_test("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   strdup_test(" ");
   strdup_test("\n");
-  printf("FTATOIBASE %d\n", ft__atoi_base("--1a2", "0123456789"));
+  printf("FTATOIBASE %d\n", ft__atoi_base("-+1-2", "0123456789"));
 }
