@@ -1,4 +1,6 @@
 section .data
+value   dd 0
+res     dd 0
 
 section .bss
 
@@ -18,9 +20,9 @@ ft__atoi_base:
 	mov  rdi, rsi
 	check_base_leng: ; check base leng
 	call ft__strlen
-	mov  rdx, rax; save base leng
 	cmp  rax, 2
 	jl   end_fail
+	mov  rdx, rax; save base leng
 
 	mov rdi, rsi
 	check_chars_in_base: ; check incorrect chars in base
@@ -60,27 +62,45 @@ calc_number:
 	mov rbx, 1
 
 loop:
-	mov al, [rdi + rcx]
-	cmp al, ' '
-	je  increment
-	cmp al, '\t'
-	je  increment
-	cmp al, '\r'
-	je  increment
-	cmp al, '\n'
-	je  increment
-	cmp al, '\v'
-	je  increment
-	cmp al, '\f'
-	je  increment
-	cmp al, 0
-	je  return
-	cmp al, byte '-'
-	je  mul_sig
-	cmp al, byte '+'
-	je  increment
-	jmp increment
+	mov  al, [rdi + rcx]
+	cmp  al, ' '
+	je   increment
+	cmp  al, '\t'
+	je   increment
+	cmp  al, '\r'
+	je   increment
+	cmp  al, '\n'
+	je   increment
+	cmp  al, '\v'
+	je   increment
+	cmp  al, '\f'
+	je   increment
+	cmp  al, 0
+	je   return
+	cmp  al, byte '-'
+	je   mul_sig
+	cmp  al, byte '+'
+	call .get_char
+	je   increment
+	jmp  increment
 	jmp loop
+
+.get_char:
+	xor r9, r9
+	cmp byte [rsi + r9], 0
+	je  increment
+	cmp [rsi + r9], al
+	je  .add_num
+	inc r9
+	jmp .get_char
+	ret
+
+.add_num:
+	mov  r12, [res]
+	imul r12, rdx
+	add  r12, r9
+	mov  [res], r12
+	ret
 
 increment:
 	call .inc
@@ -107,6 +127,7 @@ end_fail:
 	pop rsi
 	pop rdi
 	xor rax, rax
+	mov rax, 42
 	;   Epilog
 	mov rsp, rbp
 	pop rbp
@@ -118,5 +139,5 @@ return:
 	mov rsp, rbp
 	pop rbp
 
-	mov rax, rbx; to test
+	mov rax, [res]; to test
 	ret
