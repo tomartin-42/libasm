@@ -1,5 +1,4 @@
 section .data
-value   dd 0
 res     dd 0
 
 section .bss
@@ -17,6 +16,7 @@ ft__atoi_base:
 	push rdi
 	push rsi
 
+	xor  r9, r9
 	mov  rdi, rsi
 	check_base_leng: ; check base leng
 	call ft__strlen
@@ -86,7 +86,6 @@ loop:
 	jmp loop
 
 .get_char:
-	xor r9, r9
 	cmp byte [rsi + r9], 0
 	je  increment
 	cmp [rsi + r9], al
@@ -139,5 +138,6 @@ return:
 	mov rsp, rbp
 	pop rbp
 
-	mov rax, [res]; to test
+	mov  rax, [res]
+	imul rax, rbx
 	ret
