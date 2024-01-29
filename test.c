@@ -1,33 +1,4 @@
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-#define STRLEN(s) printf("%s \t %zu === %zu\n", s, strlen(s), ft__strlen(s));
-#define STRCMP(s1, s2)                                                         \
-  printf("compare %s - %s %i === %i\n", s1, s2, strcmp(s1, s2),                \
-         ft__strcmp(s1, s2));
-
-size_t ft__strlen(char *str);
-int ft__strcmp(const char *str1, const char *str2);
-char *ft__strcpy(char *restrict dst, const char *restrict src);
-char *ft__strdup(const char *str);
-ssize_t ft__read(int fd, void *buf, size_t count);
-ssize_t ft__write(int fd, const void *buf, size_t count);
-int ft__atoi_base(char *str, char *base);
-
-typedef struct s_list {
-  void *data;
-  struct s_list *next;
-} t_list;
-
-void strdup_test(const char *s) {
-  char *res = ft__strdup(s);
-  printf("%s - %p === %s - %p \n", s, s, res, res);
-  free(res);
-}
+#include "test.h"
 
 int main(void) {
 
@@ -63,5 +34,11 @@ int main(void) {
   strdup_test("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   strdup_test(" ");
   strdup_test("\n");
+  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "WRITE");
+  write_test(1, "HOLA", 4);
+  write_test(2, "HOLA", 4);
+  write_test(1, "", 0);
+  write_test(42424242, "HOLA", 4);
+  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "ATOI_BASE");
   printf("FTATOIBASE %d\n", ft__atoi_base("-+1-2", "0123456789"));
 }
