@@ -126,7 +126,6 @@ end_fail:
 	pop rsi
 	pop rdi
 	xor rax, rax
-	mov rax, 42
 	;   Epilog
 	mov rsp, rbp
 	pop rbp

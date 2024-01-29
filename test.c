@@ -40,5 +40,21 @@ int main(void) {
   write_test(1, "", 0);
   write_test(42424242, "HOLA", 4);
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "ATOI_BASE");
-  printf("FTATOIBASE %d\n", ft__atoi_base("-+1-2", "0123456789"));
+  ATOI_BASE("42", "0123456789");
+  ATOI_BASE("-42", "0123456789");
+  ATOI_BASE("-4-2", "0123456789");
+  ATOI_BASE("-4+2", "0123456789");
+  ATOI_BASE("---42", "0123456789");
+  ATOI_BASE("4a2", "0123456789");
+  ATOI_BASE("42a", "0123456789");
+  ATOI_BASE("    \r   \t-42", "0123456789");
+  ATOI_BASE("00101010", "01");
+  ATOI_BASE("-00101010", "01");
+  ATOI_BASE("2A", "0123456789ABCDEF");
+  ATOI_BASE("-2A", "0123456789ABCDEF");
+  ATOI_BASE("", "0123456789ABCDEF");
+  ATOI_BASE("42", "01234567891");
+  ATOI_BASE("42", "01+23456789");
+  ATOI_BASE("42", "01-23456789");
+  ATOI_BASE("42", "4");
 }

@@ -61,7 +61,7 @@ fclean:
 re: fclean all
 
 test: all
-	gcc -no-pie $(CFLAGS) -g3 -o test test.c -L. -lasm
+	gcc -no-pie $(CFLAGS) -g3 -o test test.c ft_atoi_base.c -L. -lasm
 	./test
 
 print:
