@@ -14,7 +14,9 @@
   printf("compare (%s - %s) %i === %i\n", s1, s2, strcmp(s1, s2),              \
          ft__strcmp(s1, s2));
 #define ATOI_BASE(s, b)                                                        \
-  printf("(%s - %s) %d === %d\n", s, b, ft_atoi_base(s, b), ft__atoi_base(s, b))
+  printf("(%s - %s) %d === %d\n", s, b, ft_atoi_base(s, b),                    \
+         ft__atoi_base(s, b));                                                 \
+  setbuf(stdout, NULL);
 
 size_t ft__strlen(char *str);
 int ft__strcmp(const char *str1, const char *str2);

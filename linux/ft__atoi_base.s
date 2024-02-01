@@ -1,5 +1,5 @@
 section .data
-res     dd 0
+res     dq 0
 
 section .bss
 
@@ -20,9 +20,9 @@ ft__atoi_base:
 	mov  rdi, rsi
 	check_base_leng: ; check base leng
 	call ft__strlen
+	mov  rdx, rax; save base leng
 	cmp  rax, 2
 	jl   end_fail
-	mov  rdx, rax; save base leng
 
 	mov rdi, rsi
 	check_chars_in_base: ; check incorrect chars in base
@@ -62,6 +62,8 @@ calc_number:
 	mov rbx, 1
 
 loop:
+	xor  rax, rax
+	xor  r9, r9
 	mov  al, [rdi + rcx]
 	cmp  al, ' '
 	je   increment
@@ -87,11 +89,16 @@ loop:
 
 .get_char:
 	cmp byte [rsi + r9], 0
-	je  increment
+	je  .ret
 	cmp [rsi + r9], al
 	je  .add_num
 	inc r9
+	cmp r9, rdx
+	je  end_fail
 	jmp .get_char
+	ret
+
+.ret:
 	ret
 
 .add_num:
@@ -114,6 +121,8 @@ mul_sig:
 	jmp  loop
 
 .mul_sig:
+	cmp  rbx, -1
+	je   end_fail
 	imul rbx, rbx, -1
 	call .inc
 	ret

@@ -77,4 +77,4 @@ print_bonus:
 	@echo $(SRC_DIR)
 	@echo $(OBJ)
 
-a: bonus test
+a: fclean bonus test
