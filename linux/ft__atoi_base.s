@@ -65,17 +65,17 @@ loop:
 	xor  rax, rax
 	xor  r9, r9
 	mov  al, [rdi + rcx]
-	cmp  al, ' '
+	cmp  byte al, ' '
 	je   increment
-	cmp  al, '\t'
+	cmp  byte al, '\t'
 	je   increment
-	cmp  al, '\r'
+	cmp  al, 13; '\r'
 	je   increment
-	cmp  al, '\n'
+	cmp  byte al, '\n'
 	je   increment
-	cmp  al, '\v'
+	cmp  byte al, '\v'
 	je   increment
-	cmp  al, '\f'
+	cmp  byte al, '\f'
 	je   increment
 	cmp  al, 0
 	je   return
@@ -83,20 +83,25 @@ loop:
 	je   mul_sig
 	cmp  al, byte '+'
 	je   increment
-	call .get_char
-	jmp  increment
-	jmp loop
+	call get_char
+	;jmp loop
 
-.get_char:
+get_char:
+	mov al, [rdi + rcx]
+	cmp al, 0
+	je  return
+	cmp al, '-'
+	je  return
+	cmp al, '+'
+	je  return
 	cmp byte [rsi + r9], 0
 	je  .ret
+	cmp r9, rdx
+	je  end_fail
 	cmp [rsi + r9], al
 	je  .add_num
 	inc r9
-	cmp r9, rdx
-	je  end_fail
-	jmp .get_char
-	ret
+	jmp get_char
 
 .ret:
 	ret
@@ -106,6 +111,12 @@ loop:
 	imul r12, rdx
 	add  r12, r9
 	mov  [res], r12
+	call .internal_increment
+	jmp  get_char
+
+.internal_increment:
+	xor r9, r9
+	inc rcx
 	ret
 
 increment:

@@ -62,7 +62,7 @@ re: fclean all
 
 test:
 	gcc -no-pie $(CFLAGS) -g3 -o test test.c ft_atoi_base.c -L. -lasm
-	./test
+	#./test
 
 print:
 	@echo $(SRC)

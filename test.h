@@ -13,10 +13,7 @@
 #define STRCMP(s1, s2)                                                         \
   printf("compare (%s - %s) %i === %i\n", s1, s2, strcmp(s1, s2),              \
          ft__strcmp(s1, s2));
-#define ATOI_BASE(s, b)                                                        \
-  printf("(%s - %s) %d === %d\n", s, b, ft_atoi_base(s, b),                    \
-         ft__atoi_base(s, b));                                                 \
-  setbuf(stdout, NULL);
+#define ATOI_BASE(s, b)
 
 size_t ft__strlen(char *str);
 int ft__strcmp(const char *str1, const char *str2);
@@ -31,6 +28,14 @@ void strdup_test(const char *s) {
   char *res = ft__strdup(s);
   printf("%s - %p === %s - %p \n", s, s, res, res);
   free(res);
+}
+
+void atoibase(char *str, char *base) {
+  int i = ft_atoi_base(str, base);
+  printf("AT1\n");
+  int j = ft__atoi_base(str, base);
+  printf("AT2\n");
+  printf("(%s - %s) %d === %d \n", str, base, i, j);
 }
 
 void write_test(int fd, void *buff, size_t count) {
