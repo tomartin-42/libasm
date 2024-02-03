@@ -13,6 +13,7 @@ ft__atoi_base:
 
 	xor r9, r9; base_length
 	xor rax, rax; result
+	xor rdx, rdx; sign
 
 base_loop:
 	cmp byte [rsi, r9], 0
@@ -52,13 +53,49 @@ check_base_chars:
 base_end:
 	cmp r9, 2
 	jl  end_fail
-	mov rax, 100000
+	mov r12, -1
+
+inc:
+	inc r12
+
+atoi_loop:
+	cmp byte [rdi + r12], 32; ' '
+	je  inc
+	cmp byte [rdi + r12], 9; '\t'
+	je  inc
+	cmp byte [rdi + r12], 10; '\n'
+	je  inc
+	cmp byte [rdi + r12], 13; '\r'
+	je  inc
+	cmp byte [rdi + r12], 11; '\v'
+	je  inc
+	cmp byte [rdi + r12], 12; '\f'
+	je  inc
+	cmp byte [rdi + r12], 43; '+'
+	je  inc
+	cmp byte [rdi + r12], 45; '-'
+	je  sing
+	cmp byte [rdi + r12], 0
+	je  set_rax
+	jmp inc
+
+sing:
+	xor rdx, -1
+	jmp inc
+
+end_fail:
 	pop r12
 	mov rsp, rbp
 	pop rbp
 	ret
 
-end_fail:
+set_rax:
+	mov rax, 10000
+	cmp rdx, 0
+	je  return
+	neg rax
+
+return:
 	pop r12
 	mov rsp, rbp
 	pop rbp
