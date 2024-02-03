@@ -14,7 +14,7 @@ else
 endif
 
 
-SRC_FILES = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s ft__read.s ft__write.s 
+SRC_FILES = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s ft__read.s ft__write.s ft_atoi_base.s
 BONUS_FILES = ft__atoi_base.s
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 SRC_BONUS = $(addprefix $(SRC_DIR)/, $(BONUS_FILES))
@@ -61,7 +61,7 @@ fclean:
 re: fclean all
 
 test:
-	gcc -no-pie $(CFLAGS) -g3 -o test test.c ft_atoi_base.c -L. -lasm && ./test
+	gcc -no-pie $(CFLAGS) -g3 -o test test.c -L. -lasm && ./test
 
 print:
 	@echo $(SRC)
