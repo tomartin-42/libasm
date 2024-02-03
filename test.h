@@ -32,9 +32,7 @@ void strdup_test(const char *s) {
 
 void atoibase(char *str, char *base) {
   int i = ft_atoi_base(str, base);
-  printf("AT1\n");
   int j = ft__atoi_base(str, base);
-  printf("AT2\n");
   printf("(%s - %s) %d === %d \n", str, base, i, j);
 }
 

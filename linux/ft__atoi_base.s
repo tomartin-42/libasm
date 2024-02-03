@@ -94,10 +94,10 @@ get_char:
 	je  return
 	cmp al, '+'
 	je  return
-	cmp byte [rsi + r9], 0
-	je  .ret
 	cmp r9, rdx
 	je  end_fail
+	cmp byte [rsi + r9], 0
+	je  .ret
 	cmp [rsi + r9], al
 	je  .add_num
 	inc r9
