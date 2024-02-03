@@ -1,162 +1,122 @@
-section .data
-res     dq 0
-
-section .bss
-
 section .text
 global  ft__atoi_base
 
-extern ft__strlen
+	; delete R8, R9, R10 and RAX
 
-ft__atoi_base:
-	;    Prolog
-	push rbp
-	mov  rbp, rsp
+	ft__atoi_base:        ; rdi = *str, rsi = *base
+	push rbx; save rbx (sign)
+	push r12; save r12 (base_length)
+	xor  rax, rax; total = 0
+	xor  rbx, rbx; sign = 0
+	xor  r12, r12; base_length = 0
+	jmp  base_check_loop
 
-	push rdi
-	push rsi
+base_check_increment:
+	inc r12; base_length++
 
-	xor  r9, r9
-	mov  rdi, rsi
-	check_base_leng: ; check base leng
-	call ft__strlen
-	mov  rdx, rax; save base leng
-	cmp  rax, 2
-	jl   end_fail
+base_check_loop:
+	cmp BYTE [rsi + r12], 0
+	jz  base_check_end
+	mov r8, r12; j = base_length
 
-	mov rdi, rsi
-	check_chars_in_base: ; check incorrect chars in base
-	xor rax, rax
-	mov al, [rdi]
-	cmp al, 32; comp space
-	je  end_fail
-	cmp al, 43; comp +
-	je  end_fail
-	cmp al, 45; comp -
-	je  end_fail
-	inc rdi
-	cmp al, 0; end of string
-	jne check_chars_in_base
+base_check_dup_inc:
+	inc r8; j++
 
-	mov rdi, rsi
-	check_repeated_char_in_base: ; check repeated char in base
-	mov rax, [rdi]
-	cmp al, 0
-	je  calc_number
-	inc rdi
-	xor rcx, rcx
+base_check_dup_loop:
+	cmp BYTE [rsi + r8], 0; !base[j]
+	jz  base_check_correct
+	mov r9b, [rsi + r8]
+	cmp BYTE [rsi + r12], r9b; base[base_length] == base[j]
+	je  set_rax
+	jmp base_check_dup_inc
 
-	check_chars: ; check chars in al - bl
-	mov bl, [rdi + rcx]
-	cmp bl, 0
-	je  check_repeated_char_in_base
-	cmp al, bl
-	je  end_fail
-	inc rcx
-	jmp check_chars
+base_check_correct:
+	cmp BYTE [rsi + r12], 32; base[base_length] == ' '
+	je  set_rax
+	cmp BYTE [rsi + r12], 43; base[base_length] == '+'
+	je  set_rax
+	cmp BYTE [rsi + r12], 45; base[base_length] == '-'
+	je  set_rax
+	cmp BYTE [rsi + r12], 9; base[base_length] == '\t'
+	je  set_rax
+	cmp BYTE [rsi + r12], 10; base[base_length] == '\n'
+	je  set_rax
+	cmp BYTE [rsi + r12], 13; base[base_length] == '\r'
+	je  set_rax
+	cmp BYTE [rsi + r12], 11; base[base_length] == '\v'
+	je  set_rax
+	cmp BYTE [rsi + r12], 12; base[base_length] == '\f'
+	je  set_rax
+	jmp base_check_increment
 
-calc_number:
-	xor rcx, rcx
-	pop rsi; restore to original value rsi "base"
-	pop rdi; restore rdi original value rdi "str"
-	mov rbx, 1
+base_check_end:
+	cmp r12, 1; base_length <= 1
+	jle set_rax
+	xor r8, r8; i = 0
+	jmp skip_whitespaces
 
-loop:
-	xor  rax, rax
-	xor  r9, r9
-	mov  al, [rdi + rcx]
-	cmp  al, ' '
-	je   increment
-	cmp  al, 9; '\t'
-	je   increment
-	cmp  al, 13; '\r'
-	je   increment
-	cmp  al, 10; '\n'
-	je   increment
-	cmp  al, 11; '\v'
-	je   increment
-	cmp  al, 12; '\f'
-	je   increment
-	cmp  al, 0
-	je   return
-	cmp  al, byte '-'
-	je   mul_sig
-	cmp  al, byte '+'
-	je   increment
-	call get_char
-	;jmp loop
+skip_whitespaces_inc:
+	inc r8; i++
 
-get_char:
-	mov al, [rdi + rcx]
-	cmp al, 0
-	je  return
-	cmp al, '-'
-	je  return
-	cmp al, '+'
-	je  return
-	cmp r9, rdx
-	je  end_fail
-	cmp byte [rsi + r9], 0
-	je  .ret
-	cmp [rsi + r9], al
-	je  .add_num
-	inc r9
-	jmp get_char
+skip_whitespaces:
+	cmp BYTE [rdi + r8], 32; str[i] == ' '
+	je  skip_whitespaces_inc
+	cmp BYTE [rdi + r8], 9; str[i] == '\t'
+	je  skip_whitespaces_inc
+	cmp BYTE [rdi + r8], 10; str[i] == '\n'
+	je  skip_whitespaces_inc
+	cmp BYTE [rdi + r8], 13; str[i] == '\r'
+	je  skip_whitespaces_inc
+	cmp BYTE [rdi + r8], 11; str[i] == '\v'
+	je  skip_whitespaces_inc
+	cmp BYTE [rdi + r8], 12; str[i] == '\f'
+	je  skip_whitespaces_inc
+	jmp check_sign
 
-.ret:
-	ret
+is_negative:
+	xor bl, 0x00000001
 
-.add_num:
-	mov  r12, [res]
-	imul r12, rdx
-	add  r12, r9
-	mov  [res], r12
-	call .internal_increment
-	jmp  get_char
+is_positive:
+	inc r8
 
-.internal_increment:
-	xor r9, r9
-	inc rcx
-	ret
+check_sign:
+	cmp BYTE [rdi + r8], 45; str[i] == '-'
+	je  is_negative
+	cmp BYTE [rdi + r8], 43; str[i] == '+'
+	je  is_positive
+	jmp atoi_loop
 
-increment:
-	call .inc
-	jmp  loop
+atoi_increment:
+	inc r8; i++
 
-.inc:
-	inc rcx
-	ret
+atoi_loop:
+	cmp BYTE [rdi + r8], 0; str[i] == 0
+	je  set_rax
+	xor r9, r9; j = 0
+	jmp atoi_idx
 
-mul_sig:
-	call .mul_sig
-	jmp  loop
+atoi_idx_inc:
+	inc r9; j++
 
-.mul_sig:
-	cmp  rbx, -1
-	je   end_fail
-	imul rbx, rbx, -1
-	call .inc
-	ret
+atoi_idx:
+	mov r10b, BYTE [rsi + r9]
+	cmp r10b, 0; base[j] == 0
+	je  set_rax
+	cmp BYTE [rdi + r8], r10b; base[j] == str[i]
+	jne atoi_idx_inc
 
-.inc:
-	inc rcx
-	ret
+add_to_total:
+	mul r12; total *= base_length
+	add rax, r9; total += k
+	jmp atoi_increment
 
-end_fail:
-	pop rsi
-	pop rdi
-	xor rax, rax
-	;   Epilog
-	mov rsp, rbp
-	pop rbp
-
-	ret
+set_rax:
+	mov rax, rax; ret = total
+	cmp rbx, 0; sign is negative
+	jz  return
+	neg rax; ret = -ret
 
 return:
-	;   Epilog
-	mov rsp, rbp
-	pop rbp
-
-	mov  rax, [res]
-	imul rax, rbx
+	pop r12; restore r12
+	pop rbx; restore rbx
 	ret

@@ -31,9 +31,12 @@ void strdup_test(const char *s) {
 }
 
 void atoibase(char *str, char *base) {
-  int i = ft_atoi_base(str, base);
-  int j = ft__atoi_base(str, base);
-  printf("(%s - %s) %d === %d \n", str, base, i, j);
+  char buff[200];
+  // sprintf(buff, "(%s - %s) %d === %d\n", str, base, ft_atoi_base(str, base),
+  //         ft__atoi_base(str, base));
+  sprintf(buff, "%d === %d\n", ft_atoi_base(str, base),
+          ft__atoi_base(str, base));
+  printf("%s", buff);
 }
 
 void write_test(int fd, void *buff, size_t count) {
