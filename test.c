@@ -56,10 +56,13 @@ int main(void) {
   atoibase("00101010", "01");
   atoibase("-00101010", "01");
   atoibase("2A", "0123456789ABCDEF");
-  //   atoibase("-2A", "0123456789ABCDEF");
-  //   atoibase("", "0123456789ABCDEF");
-  //   atoibase("42", "01234567891");
-  //   atoibase("42", "01+23456789");
-  //   atoibase("42", "01-23456789");
-  //   atoibase("42", "4");
+  atoibase("-2A", "0123456789ABCDEF");
+  atoibase("", "0123456789ABCDEF");
+  atoibase("42", "01234567891");
+  atoibase("42", "01+23456789");
+  atoibase("42", "01-23456789");
+  atoibase("42", " 0123");
+  atoibase("42", "0123 ");
+  atoibase("42", "01 23");
+  atoibase("42", "4");
 }
