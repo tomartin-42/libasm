@@ -65,17 +65,17 @@ loop:
 	xor  rax, rax
 	xor  r9, r9
 	mov  al, [rdi + rcx]
-	cmp  byte al, ' '
+	cmp  al, ' '
 	je   increment
-	cmp  byte al, '\t'
+	cmp  al, 9; '\t'
 	je   increment
 	cmp  al, 13; '\r'
 	je   increment
-	cmp  byte al, '\n'
+	cmp  al, 10; '\n'
 	je   increment
-	cmp  byte al, '\v'
+	cmp  al, 11; '\v'
 	je   increment
-	cmp  byte al, '\f'
+	cmp  al, 12; '\f'
 	je   increment
 	cmp  al, 0
 	je   return
