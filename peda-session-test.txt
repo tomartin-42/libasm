@@ -1,2 +1,3 @@
-break base_loop
+break ft__atoi_base.s:16
+break atoi_loop
 

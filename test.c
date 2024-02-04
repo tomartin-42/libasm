@@ -42,7 +42,7 @@ int main(void) {
   //  write_test(42424242, "HOLA", 4);
   //  printf("\n");
   //  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "atoibase");
-  atoibase("42", "0123456789");
+  atoibase("-42", "0123456789");
   atoibase("+42", "0123456789");
   atoibase("++42", "0123456789");
   atoibase("-42", "0123456789");

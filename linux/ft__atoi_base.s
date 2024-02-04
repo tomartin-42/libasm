@@ -13,7 +13,7 @@ ft__atoi_base:
 
 	xor r9, r9; base_length
 	xor rax, rax; result
-	xor rdx, rdx; sign
+	mov rdx, 1; sign
 
 base_loop:
 	cmp byte [rsi, r9], 0
@@ -59,6 +59,7 @@ inc:
 	inc r12
 
 atoi_loop:
+	xor r10, r10
 	cmp byte [rdi + r12], 32; ' '
 	je  inc
 	cmp byte [rdi + r12], 9; '\t'
@@ -77,10 +78,10 @@ atoi_loop:
 	je  sing
 	cmp byte [rdi + r12], 0
 	je  set_rax
-	jmp inc
+	jmp add_num
 
 sing:
-	xor rdx, -1
+	neg rdx
 	jmp inc
 
 end_fail:
@@ -89,10 +90,22 @@ end_fail:
 	pop rbp
 	ret
 
+base_inc:
+	inc r10
+
+add_num:
+	mov r8b, byte [rsi + r10]
+	cmp r8b, 0
+	je  set_rax
+	cmp r8b, byte [rdi + r12]
+	jne base_inc
+	mul r9
+	add rax, r10
+	jmp inc
+
 set_rax:
-	mov rax, 10000
-	cmp rdx, 0
-	je  return
+	cmp rdx, 1
+	jl  return
 	neg rax
 
 return:

@@ -61,7 +61,7 @@ fclean:
 re: fclean all
 
 test:
-	gcc -no-pie $(CFLAGS) -g3 -o test test.c -L. -lasm && ./test
+	gcc -no-pie $(CFLAGS) -g3 -o test test.c -L. -lasm && ./test 
 
 print:
 	@echo $(SRC)
