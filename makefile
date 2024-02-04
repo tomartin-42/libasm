@@ -14,14 +14,14 @@ else
 endif
 
 
-SRC_FILES = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s ft__read.s ft__write.s ft_atoi_base.s
-BONUS_FILES = ft__atoi_base.s
+SRC_FILES = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s ft__read.s ft__write.s 
+BONUS_FILES = ft__atoi_base.s ft_atoi_base.s ft__list_size.s
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 SRC_BONUS = $(addprefix $(SRC_DIR)/, $(BONUS_FILES))
 OBJ_DIR = obj
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.s=.o))
 
-ifdef BONUS
+ifdef BONUS 
     SRC += $(SRC_BONUS)
     OBJ += $(addprefix $(OBJ_DIR)/, $(BONUS_FILES:.s=.o))
 endif
@@ -56,12 +56,16 @@ fclean:
 	rm -f $(NAME) 
 	rm -f *.lst
 	rm -f test
+	rm -f test_bonus
 	@echo "All clean!!"
 
 re: fclean all
 
 test:
 	gcc -no-pie $(CFLAGS) -g3 -o test test.c -L. -lasm && ./test 
+
+test_bonus: bonus
+	gcc -no-pie $(CFLAGS) -g3 -o test_bonus test_bonus.c -L. -lasm && ./test_bonus 
 
 print:
 	@echo $(SRC)
@@ -76,4 +80,4 @@ print_bonus:
 	@echo $(SRC_DIR)
 	@echo $(OBJ)
 
-a: fclean bonus test
+a: fclean bonus test_bonus

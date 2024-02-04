@@ -3,3 +3,5 @@ Errno in FreeBSD
 
 Syscall table linux
   https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
+
+Los punteros tinene un size de 8

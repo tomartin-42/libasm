@@ -11,9 +11,10 @@ ft__atoi_base:
 	mov  rbp, rsp
 	push r12
 
-	xor r9, r9; base_length
-	xor rax, rax; result
-	mov rcx, 1; sign
+	xor  r9, r9; base_length
+	xor  rax, rax; result
+	mov  rcx, 1; sign
+	;r12 conter
 
 base_loop:
 	cmp byte [rsi, r9], 0
