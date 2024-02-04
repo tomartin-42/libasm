@@ -7,6 +7,26 @@ void atoibase(char *str, char *base) {
   printf("%s", buff);
 }
 
+void list_size(int i) {
+  t_list *list = NULL;
+
+  for (int j = 0; j < i; j++) {
+    t_list *new_node = (t_list *)malloc(sizeof(t_list));
+    new_node->data = malloc(sizeof(int));
+    *(int *)new_node->data = j;
+    new_node->next = list;
+    list = new_node;
+  }
+  printf("%d - %d\n", i, ft__list_size(list));
+  while (list != NULL) {
+    t_list *tmp = list;
+    list = list->next;
+    printf("%d\n", *(int *)tmp->data);
+    free(tmp->data);
+    free(tmp);
+  }
+}
+
 int main(void) {
 
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_ATOI_BASE");
@@ -35,4 +55,5 @@ int main(void) {
   atoibase("42", "4");
   printf("\n");
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_LIST_SIZE");
+  list_size(10);
 }

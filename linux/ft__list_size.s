@@ -14,11 +14,12 @@ ft__list_size:
 	xor rax, rax
 
 loop:
-	cmp rdi, 0
-	je  end
-	mov rdi, [rdi + 8]
-	inc rax
-	jmp loop
+	;mov rdx, [rdi + 8]
+	cmp  qword [rdi + 8], 0
+	je   end
+	mov  rdi, [rdi + 8]
+	inc  rax
+	jmp  loop
 
 end:
 	pop rdi
