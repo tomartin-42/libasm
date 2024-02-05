@@ -1,3 +1,0 @@
-break ft__list_push_front
-break /home/tommy/libasm/linux/ft__list_push_front.s:23
-
