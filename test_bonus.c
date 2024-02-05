@@ -17,11 +17,10 @@ void list_size(int i) {
     new_node->next = list;
     list = new_node;
   }
-  printf("%d - %d\n", i, ft__list_size(list));
+  printf("%d === %d\n", i, ft__list_size(list));
   while (list != NULL) {
     t_list *tmp = list;
     list = list->next;
-    printf("%d\n", *(int *)tmp->data);
     free(tmp->data);
     free(tmp);
   }
@@ -56,4 +55,7 @@ int main(void) {
   printf("\n");
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_LIST_SIZE");
   list_size(10);
+  list_size(999);
+  list_size(1);
+  list_size(0);
 }
