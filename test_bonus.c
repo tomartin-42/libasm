@@ -51,6 +51,7 @@ void add_node_front(int i, int data) {
   void *num = malloc(sizeof(data));
   *(int *)num = data;
 
+  printf("DATA %d\n", *(int *)num);
   print_list(list);
   ft__list_push_front(&list, num);
   print_list(list);
@@ -92,4 +93,6 @@ int main(void) {
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n",
          "FT_LIST_PUSH_FRONT");
   add_node_front(10, 99999);
+  add_node_front(1, 99999);
+  add_node_front(0, 99999);
 }

@@ -12,16 +12,18 @@ ft__list_push_front:
 	push rbp
 	mov  rbp, rsp
 
-	push rdi; save rdi
+	push rdi; save rdi - bengin_list
+	push rsi; save rsi - data
 	mov  rdi, struct_size
 	call malloc
 	cmp  rax, 0
 	je   end
+	pop  rsi
 	pop  rdi
 	mov  rdx, [rdi]
 	mov  [rax + 8], rdx; *bengin = *new_node
 	mov  [rax], rsi; seve data
-	mov  rdi, rax
+	mov  [rdi], rax
 
 end:
 	mov rsp, rbp
