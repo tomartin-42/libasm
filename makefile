@@ -15,7 +15,7 @@ endif
 
 
 SRC_FILES = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s ft__read.s ft__write.s 
-BONUS_FILES = ft__atoi_base.s ft_atoi_base.s ft__list_size.s
+BONUS_FILES = ft__atoi_base.s ft_atoi_base.s ft__list_size.s ft__list_push_front.s
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 SRC_BONUS = $(addprefix $(SRC_DIR)/, $(BONUS_FILES))
 OBJ_DIR = obj

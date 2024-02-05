@@ -7,7 +7,7 @@ void atoibase(char *str, char *base) {
   printf("%s", buff);
 }
 
-void list_size(int i) {
+t_list *create_list(int i) {
   t_list *list = NULL;
 
   for (int j = 0; j < i; j++) {
@@ -17,13 +17,43 @@ void list_size(int i) {
     new_node->next = list;
     list = new_node;
   }
-  printf("%d === %d\n", i, ft__list_size(list));
+  return list;
+}
+
+void free_list(t_list *list) {
   while (list != NULL) {
     t_list *tmp = list;
     list = list->next;
     free(tmp->data);
     free(tmp);
   }
+}
+
+void print_list(t_list *list) {
+  int j = 0;
+  printf("LIST---------------\n");
+  while (list != NULL) {
+    printf("data - %d\n", *(int *)list->data);
+    j++;
+    list = list->next;
+  }
+  printf("LIST SIZE: %d\n\n", j);
+}
+
+void list_size(int i) {
+  t_list *list = create_list(i);
+  printf("%d === %d\n", i, ft__list_size(list));
+  free_list(list);
+}
+
+void add_node_front(int i, int data) {
+  t_list *list = create_list(i);
+  void *num = malloc(sizeof(data));
+  *(int *)num = data;
+
+  print_list(list);
+  ft__list_push_front(&list, num);
+  print_list(list);
 }
 
 int main(void) {
@@ -58,4 +88,8 @@ int main(void) {
   list_size(999);
   list_size(1);
   list_size(0);
+  printf("\n");
+  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n",
+         "FT_LIST_PUSH_FRONT");
+  add_node_front(10, 99999);
 }
