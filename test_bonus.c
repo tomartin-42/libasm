@@ -24,7 +24,6 @@ void free_list(t_list *list) {
   while (list != NULL) {
     t_list *tmp = list;
     list = list->next;
-    free(tmp->data);
     free(tmp);
   }
 }
@@ -48,13 +47,14 @@ void list_size(int i) {
 
 void add_node_front(int i, int data) {
   t_list *list = create_list(i);
-  void *num = malloc(sizeof(data));
-  *(int *)num = data;
 
-  printf("DATA %d\n", *(int *)num);
+  printf("DATA %d\n", data);
+  printf("\t**List Before**\n");
   print_list(list);
-  ft__list_push_front(&list, num);
+  ft__list_push_front(&list, (void *)&data);
+  printf("\t**List After**\n");
   print_list(list);
+  printf("\n");
   free_list(list);
 }
 

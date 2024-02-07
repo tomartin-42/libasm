@@ -8,12 +8,16 @@ global  ft__list_sort
 ft__list_sort:
 	push rbp
 	mov  rbp, rsp
-	push rdi
+	push r9
 
-	mov rcx, [rdi]; begin->data
+	mov rcx, [rdi]
+	mov rdx, [rcx]
 	mov rax, [rcx + 8]
+	mov r9, [rax]
+	mov [rcx], r9
+	mov [rax], rdx
 
-	pop rdi
+	pop r9
 	mov rsp, rbp
 	pop rbp
 	ret
