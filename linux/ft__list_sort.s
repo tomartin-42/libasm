@@ -14,6 +14,8 @@ ft__list_sort:
 	mov  rbp, rsp
 	push rbx
 	push rsi
+	push r14
+	push r15
 
 	mov r9, rsi
 	cmp qword [rdi], 0x0; 0 nodes
@@ -49,6 +51,8 @@ inc_start_node:
 	jmp loop
 
 end:
+	pop r15
+	pop r14
 	pop rsi
 	pop rbx
 	mov rsp, rbp
@@ -56,6 +60,10 @@ end:
 	ret
 
 swap:
+	mov r14, [rcx]
+	mov r15, [rbx]
+	mov [rcx], r14
+	mov [rbx], r15
 
 	;   mov rcx, [rdi]
 	;   mov rdx, [rcx]
