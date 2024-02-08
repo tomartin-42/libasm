@@ -115,4 +115,6 @@ int main(void) {
   printf("\n");
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_LIST_SHORT");
   listsort(10);
+  // listsort(0);
+  // listsort(1);
 }
