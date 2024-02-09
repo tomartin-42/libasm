@@ -24,31 +24,24 @@ ft__list_sort:
 	cmp qword [rdx + struct_next], 0x0; 1 node
 	je  end
 
-	mov rcx, [rdi]; strat loop node
+	mov rbx, [rdi]; strat loop node
+	mov rcx, rbx
 
 loop:
-	mov rbx, [rdx + struct_next]
-	cmp qword [rcx + struct_next], 0x0; last node, end loop
-	je  end
-	mov rbx, [rcx + struct_next]
-	cmp rbx, 0x0
+	mov rcx, [rcx + struct_next]
+	cmp rcx, 0x0
 	je  inc_start_node
 
+prepare_cmp:
 	push rdi
 	push rsi
-	mov  r10, [rcx]
-	mov  r11, [rbx]
-	mov  rdi, [r10]
-	mov  rsi, [r11]
+	mov  rdi, [rcx]
+	mov  rsi, [rbx]
 	call r9
 	pop  rsi
 	pop  rdi
 	cmp  rax, 0
 	jg   swap
-
-inc_start_node:
-	mov rcx, [rcx + struct_next]
-	jmp loop
 
 end:
 	pop r15
@@ -62,13 +55,20 @@ end:
 swap:
 	mov r14, [rcx]
 	mov r15, [rbx]
-	mov [rcx], r14
-	mov [rbx], r15
-
-	;   mov rcx, [rdi]
-	;   mov rdx, [rcx]
-	;   mov rax, [rcx + struct_next]
-	;   mov r9, [rax]
-	;   mov [rcx], r9
-	;   mov [rax], rdx
+	mov [rcx], r15
+	mov [rbx], r14
 	jmp loop
+
+inc_start_node:
+	mov rbx, [rbx + struct_next]
+	cmp qword [rbx + struct_next], 0x0; last node, end loop
+	je  end
+	mov rcx, rbx
+	jmp loop
+
+	; mov rcx, [rdi]
+	; mov rdx, [rcx]
+	; mov rax, [rcx + struct_next]
+	; mov r9, [rax]
+	; mov [rcx], r9
+	; mov [rax], rdx
