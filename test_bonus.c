@@ -97,11 +97,11 @@ void listsort(int i) {
   printf("******************************\n");
 }
 
-void listremoveif(int i, int data_ref) {
+void listremoveif(int i) {
   t_list *list = create_list(i);
   print_list(list);
-  ft__list_remove_if(&list, (void *)&data_ref, &cmp_remove, &free);
-  printf("REMOVE %d\n", data_ref);
+  ft__list_remove_if(&list, 0, &cmp_remove, &free);
+  printf("REMOVE %d\n", 0);
   print_list(list);
   free_list(list);
   printf("******************************\n");
@@ -155,5 +155,5 @@ int main(void) {
   printf("\n");
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n",
          "FT_LIST_REMOVE_IF");
-  listremoveif(10, 0);
+  listremoveif(10);
 }
