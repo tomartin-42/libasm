@@ -72,8 +72,10 @@ void add_node_front(int i, int data) {
   free_list(list);
 }
 
-int cmp_num(int i, int j) {
-  if (i < j) {
+int cmp_num(int *i, int *j) {
+  if (*i < *j) {
+    return (-1);
+  } else if (*i == *j) {
     return (0);
   }
   return (1);
@@ -87,8 +89,15 @@ void listsort(int i) {
   free_list(list);
   printf("******************************\n");
 }
-int main(void) {
 
+// void free_node()
+// void listremoveif(int i, void *data_ref) {
+//   t_list *list = create_list(i);
+//   print_list(list);
+//   ft__list_remove_if(&list, data_ref, &cmp_num, &):
+// }
+
+int main(void) {
   srand(time(NULL));
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_ATOI_BASE");
   atoibase("42", "0123456789");
@@ -133,4 +142,6 @@ int main(void) {
   listsort(10);
   listsort(0);
   listsort(1);
+  printf("\n");
+  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_LIST_SHORT");
 }

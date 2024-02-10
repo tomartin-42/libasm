@@ -3,7 +3,6 @@
 	;RCX    loop_start_node
 	;R9     external_function_cmp
 	section .data
-	struct_size equ 16
 	struct_next equ 8
 
 	section .text
@@ -34,10 +33,12 @@ loop:
 prepare_cmp:
 	push rdi
 	push rsi
-	mov  r14, [rbx]
-	mov  r15, [rcx]
-	mov  rdi, [r14]
-	mov  rsi, [r15]
+	;    mov  r14, [rbx]
+	;    mov  r15, [rcx]
+	;    mov  rdi, [r14]
+	;    mov  rsi, [r15]
+	mov  rdi, [rbx]
+	mov  rsi, [rcx]
 	call r9
 	pop  rsi
 	pop  rdi
