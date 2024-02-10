@@ -33,10 +33,6 @@ loop:
 prepare_cmp:
 	push rdi
 	push rsi
-	;    mov  r14, [rbx]
-	;    mov  r15, [rcx]
-	;    mov  rdi, [r14]
-	;    mov  rsi, [r15]
 	mov  rdi, [rbx]
 	mov  rsi, [rcx]
 	call r9
@@ -68,10 +64,3 @@ inc_start_node:
 	je  end
 	mov rcx, rbx
 	jmp loop
-
-	; mov rcx, [rdi]
-	; mov rdx, [rcx]
-	; mov rax, [rcx + struct_next]
-	; mov r9, [rax]
-	; mov [rcx], r9
-	; mov [rax], rdx

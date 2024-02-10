@@ -81,6 +81,13 @@ int cmp_num(int *i, int *j) {
   return (1);
 }
 
+int cmp_remove(void *data, int i) {
+  if (*(int *)(data) == i) {
+    return (0);
+  }
+  return (1);
+}
+
 void listsort(int i) {
   t_list *list = create_list(i);
   print_list(list);
@@ -90,12 +97,15 @@ void listsort(int i) {
   printf("******************************\n");
 }
 
-// void free_node()
-// void listremoveif(int i, void *data_ref) {
-//   t_list *list = create_list(i);
-//   print_list(list);
-//   ft__list_remove_if(&list, data_ref, &cmp_num, &):
-// }
+void listremoveif(int i, int data_ref) {
+  t_list *list = create_list(i);
+  print_list(list);
+  ft__list_remove_if(&list, (void *)&data_ref, &cmp_remove, &free);
+  printf("REMOVE %d\n", data_ref);
+  print_list(list);
+  free_list(list);
+  printf("******************************\n");
+}
 
 int main(void) {
   srand(time(NULL));
@@ -143,5 +153,7 @@ int main(void) {
   listsort(0);
   listsort(1);
   printf("\n");
-  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_LIST_SHORT");
+  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n",
+         "FT_LIST_REMOVE_IF");
+  listremoveif(10, 0);
 }
