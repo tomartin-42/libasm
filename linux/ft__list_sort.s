@@ -20,11 +20,10 @@ ft__list_sort:
 	mov r9, rsi
 	cmp qword [rdi], 0x0; 0 nodes
 	je  end
-	mov rdx, [rdi]
-	cmp qword [rdx + struct_next], 0x0; 1 node
+	mov rbx, [rdi]; strat loop node
+	cmp qword [rbx + struct_next], 0x0; 1 node
 	je  end
 
-	mov rbx, [rdi]; strat loop node
 	mov rcx, rbx
 
 loop:
@@ -35,13 +34,16 @@ loop:
 prepare_cmp:
 	push rdi
 	push rsi
-	mov  rdi, [rcx]
-	mov  rsi, [rbx]
+	mov  r14, [rbx]
+	mov  r15, [rcx]
+	mov  rdi, [r14]
+	mov  rsi, [r15]
 	call r9
 	pop  rsi
 	pop  rdi
-	cmp  rax, 0
-	jg   swap
+	cmp  rax, 0x1
+	je   swap
+	jmp  loop
 
 end:
 	pop r15

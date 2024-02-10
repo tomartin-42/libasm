@@ -7,13 +7,27 @@ void atoibase(char *str, char *base) {
   printf("%s", buff);
 }
 
+// t_list *create_list(int i) {
+//   t_list *list = NULL;
+//   int n[4] = {1, 3, 2, 0};
+//
+//   for (int j = 0; j < i; j++) {
+//     t_list *new_node = (t_list *)malloc(sizeof(t_list));
+//     new_node->data = malloc(sizeof(int));
+//     *(int *)new_node->data = n[j];
+//     new_node->next = list;
+//     list = new_node;
+//   }
+//   return list;
+// }
+
 t_list *create_list(int i) {
   t_list *list = NULL;
 
   for (int j = 0; j < i; j++) {
     t_list *new_node = (t_list *)malloc(sizeof(t_list));
     new_node->data = malloc(sizeof(int));
-    *(int *)new_node->data = j;
+    *(int *)new_node->data = (rand() % 10);
     new_node->next = list;
     list = new_node;
   }
@@ -60,8 +74,6 @@ void add_node_front(int i, int data) {
 
 int cmp_num(int i, int j) {
   if (i < j) {
-    return (-1);
-  } else if (i == j) {
     return (0);
   }
   return (1);
@@ -73,9 +85,11 @@ void listsort(int i) {
   ft__list_sort(&list, &cmp_num);
   print_list(list);
   free_list(list);
+  printf("******************************\n");
 }
 int main(void) {
 
+  srand(time(NULL));
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_ATOI_BASE");
   atoibase("42", "0123456789");
   atoibase("+42", "0123456789");
@@ -114,6 +128,8 @@ int main(void) {
   add_node_front(0, 99999);
   printf("\n");
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_LIST_SHORT");
+  listsort(4);
+  listsort(5);
   listsort(10);
   listsort(0);
   listsort(1);
