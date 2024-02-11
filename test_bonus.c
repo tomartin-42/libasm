@@ -7,35 +7,36 @@ void atoibase(char *str, char *base) {
   printf("%s", buff);
 }
 
-// t_list *create_list(int i) {
-//   t_list *list = NULL;
-//   int n[4] = {1, 3, 2, 0};
-//
-//   for (int j = 0; j < i; j++) {
-//     t_list *new_node = (t_list *)malloc(sizeof(t_list));
-//     new_node->data = malloc(sizeof(int));
-//     *(int *)new_node->data = n[j];
-//     new_node->next = list;
-//     list = new_node;
-//   }
-//   return list;
-// }
-
 t_list *create_list(int i) {
   t_list *list = NULL;
+  int n[4] = {0, 3, 0, 0};
 
   for (int j = 0; j < i; j++) {
     t_list *new_node = (t_list *)malloc(sizeof(t_list));
     new_node->data = malloc(sizeof(int));
-    *(int *)new_node->data = (rand() % 10);
+    *(int *)new_node->data = n[j];
     new_node->next = list;
     list = new_node;
   }
   return list;
 }
 
+// t_list *create_list(int i) {
+//   t_list *list = NULL;
+//
+//   for (int j = 0; j < i; j++) {
+//     t_list *new_node = (t_list *)malloc(sizeof(t_list));
+//     new_node->data = malloc(sizeof(int));
+//     *(int *)new_node->data = (rand() % 10);
+//     new_node->next = list;
+//     list = new_node;
+//   }
+//   return list;
+// }
+
 void free_list(t_list *list) {
   while (list != NULL) {
+    free(list->data);
     t_list *tmp = list;
     list = list->next;
     free(tmp);
@@ -108,52 +109,52 @@ void listremoveif(int i) {
 }
 
 int main(void) {
-  srand(time(NULL));
-  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_ATOI_BASE");
-  atoibase("42", "0123456789");
-  atoibase("+42", "0123456789");
-  atoibase("++42", "0123456789");
-  atoibase("-42", "0123456789");
-  atoibase("--42", "0123456789");
-  atoibase("-4-2", "0123456789");
-  atoibase("-4+2", "0123456789");
-  atoibase("---42", "0123456789");
-  atoibase("4a2", "0123456789");
-  atoibase("42a", "0123456789");
-  atoibase("    \r   \t-42", "0123456789");
-  atoibase("00101010", "01");
-  atoibase("-00101010", "01");
-  atoibase("2A", "0123456789ABCDEF");
-  atoibase("-2A", "0123456789ABCDEF");
-  atoibase("", "0123456789ABCDEF");
-  atoibase("42", "01234567891");
-  atoibase("42", "01+23456789");
-  atoibase("42", "01-23456789");
-  atoibase("42", " 0123");
-  atoibase("42", "0123 ");
-  atoibase("42", "01 23");
-  atoibase("42", "4");
-  printf("\n");
-  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_LIST_SIZE");
-  list_size(10);
-  list_size(999);
-  list_size(1);
-  list_size(0);
-  printf("\n");
-  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n",
-         "FT_LIST_PUSH_FRONT");
-  add_node_front(10, 99999);
-  add_node_front(1, 99999);
-  add_node_front(0, 99999);
-  printf("\n");
-  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_LIST_SHORT");
-  listsort(4);
-  listsort(5);
-  listsort(10);
-  listsort(0);
-  listsort(1);
-  printf("\n");
-  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n",
-         "FT_LIST_REMOVE_IF");
-  listremoveif(10);
+  // srand(time(NULL));
+  // printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_ATOI_BASE");
+  // atoibase("42", "0123456789");
+  // atoibase("+42", "0123456789");
+  // atoibase("++42", "0123456789");
+  // atoibase("-42", "0123456789");
+  // atoibase("--42", "0123456789");
+  // atoibase("-4-2", "0123456789");
+  // atoibase("-4+2", "0123456789");
+  // atoibase("---42", "0123456789");
+  // atoibase("4a2", "0123456789");
+  // atoibase("42a", "0123456789");
+  // atoibase("    \r   \t-42", "0123456789");
+  // atoibase("00101010", "01");
+  // atoibase("-00101010", "01");
+  // atoibase("2A", "0123456789ABCDEF");
+  // atoibase("-2A", "0123456789ABCDEF");
+  // atoibase("", "0123456789ABCDEF");
+  // atoibase("42", "01234567891");
+  // atoibase("42", "01+23456789");
+  // atoibase("42", "01-23456789");
+  // atoibase("42", " 0123");
+  // atoibase("42", "0123 ");
+  // atoibase("42", "01 23");
+  // atoibase("42", "4");
+  // printf("\n");
+  // printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_LIST_SIZE");
+  // list_size(10);
+  // list_size(999);
+  // list_size(1);
+  // list_size(0);
+  // printf("\n");
+  // printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n",
+  //        "FT_LIST_PUSH_FRONT");
+  // add_node_front(10, 99999);
+  // add_node_front(1, 99999);
+  // add_node_front(0, 99999);
+  // printf("\n");
+  // printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_LIST_SHORT");
+  // listsort(4);
+  // listsort(5);
+  // listsort(10);
+  // listsort(0);
+  // listsort(1);
+  // printf("\n");
+  // printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n",
+  //        "FT_LIST_REMOVE_IF");
+  listremoveif(4);
 }

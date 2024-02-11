@@ -1,7 +1,3 @@
-section .text
-global  ft__list_remove_if
-extern  free
-
 	;       RDI    lista
 	;       RSI    data_to_delete
 	;       RDX    function cmp
@@ -17,13 +13,14 @@ ft__list_remove_if:
 	push rbp
 	mov  rbp, rsp
 	push rbx
-	mov  r8, [rdi]; begin_node
-	mov  rbx, [rdi + struct_next]; next_node
+	push r12
+	push r13
 
 first_node_loop:
+	mov  r8, [rdi]; begin_node
+	mov  rbx, [r8 + struct_next]; next_node
 	cmp  qword [r8], 0x0
 	je   end
-	mov  rbx, [r8 + struct_next]
 	push rdi
 	push rsi
 	mov  rdi, [r8]
@@ -31,27 +28,82 @@ first_node_loop:
 	pop  rsi
 	pop  rdi
 	cmp  rax, 0x0
-	je   remove_first_node
-	mov  r8, rbx
-	jmp  first_node_loop
+	je   remove
 
-remove_first_node:
-	push rsi
-	push rdx
-	push rcx
+other_node_loop:
+	cmp  qword [rbx], 0x0
+	je   end
 	push rdi
-	mov  rdi, r8
-	call rcx
-	pop  rdi
-	pop  rcx
-	pop  rdx
+	push rsi
+	mov  rdi, [rbx]
+	call rdx
 	pop  rsi
-	mov  rdi, rbx
-	mov  r8, [rdi]
-	jmp  first_node_loop
+	pop  rdi
+	cmp  rax, 0x0
+	je   remove_other
+
+;remove_first_node:
+	; push rdi
+	; push rsi
+	; mov  r13, rcx; save free function
+	; mov  r12, [r8]; node->data
+	; mov  rdi, r8
+	; call free; free node with free
+	; mov  rdi, r12
+	; call r13; free node->data with function
+	; pop  rsi
+	; pop  rdi
+	; mov  [rdi], rbx
+	; jmp  first_node_loop
 
 end:
-	pop  rbx
-	mov  rsp, rbp
-	push rbp
+	pop r13
+	pop r12
+	pop rbx
+	mov rsp, rbp
+	pop rbp
 	ret
+
+remove:
+	push rdi
+	push rsi
+	push rbx
+	push rdx
+	push rcx
+	mov  r12, [r8]
+	mov  rdi, r8
+	call rcx
+	pop  rcx
+	mov  rdi, r12
+	push rcx
+	call free
+	pop  rcx
+	pop  rdx
+	pop  rbx
+	pop  rsi
+	pop  rdi
+	mov  [rdi], rbx
+	jmp  first_node_loop
+
+remove_other:
+	push rdi
+	push rsi
+	push rbx
+	push rdx
+	push rcx
+	mov  r10, [rbx + struct_next]; save next-node
+	mov  r12, [rbx]
+	mov  rdi, rbx
+	call rcx
+	pop  rcx
+	mov  rdi, r12
+	push rcx
+	call free
+	pop  rcx
+	pop  rdx
+	pop  rbx
+	pop  rsi
+	pop  rdi
+	mov  [r8 + struct_next], r10
+	mov  rbx, [r8 + struct_next]
+	jmp  other_node_loop
