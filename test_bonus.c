@@ -75,11 +75,13 @@ void add_node_front(int i, int data) {
   printf("DATA %d\n", data);
   printf("\t**List Before**\n");
   print_list(list);
-  ft__list_push_front(&list, (void *)&data);
+  void *p_data = malloc(sizeof(int));
+  *(int *)p_data = data;
+  ft__list_push_front(&list, p_data);
   printf("\t**List After**\n");
   print_list(list);
   printf("\n");
-  free_list_without_data(list);
+  free_list(list);
 }
 
 int cmp_num(int *i, int *j) {
