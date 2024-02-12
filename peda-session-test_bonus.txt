@@ -1,3 +1,2 @@
-break other_node_loop
-break /home/tommy/libasm/linux/ft__list_remove_if.s:43
+break first_node_loop
 

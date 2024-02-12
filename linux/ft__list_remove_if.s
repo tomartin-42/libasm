@@ -15,9 +15,13 @@ ft__list_remove_if:
 	push rbx
 	push r12
 	push r13
+	cmp  rdi, 0x0
+	je   end
 
 first_node_loop:
 	mov  r8, [rdi]; begin_node
+	cmp  r8, 0x0
+	je   end
 	mov  rbx, [r8 + struct_next]; next_node
 	cmp  qword [r8], 0x0
 	je   end
@@ -31,7 +35,7 @@ first_node_loop:
 	je   remove
 
 other_node_loop:
-	cmp  qword [rbx], 0x0
+	cmp  qword rbx, 0x0
 	je   end
 	push rdi
 	push rsi
@@ -41,6 +45,9 @@ other_node_loop:
 	pop  rdi
 	cmp  rax, 0x0
 	je   remove_other
+	mov  r8, [r8 + struct_next]
+	mov  rbx, [r8 + struct_next]
+	jmp  other_node_loop
 
 ;remove_first_node:
 	; push rdi
