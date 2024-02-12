@@ -90,20 +90,28 @@ remove_other:
 	push rsi
 	push rbx
 	push rdx
-	push rcx
 	mov  r10, [rbx + struct_next]; save next-node
 	mov  r12, [rbx]
 	mov  rdi, rbx
+	push r10
+	push r8
+	push rcx
 	call rcx
 	pop  rcx
+	pop  r8
+	pop  r10
 	mov  rdi, r12
+	push r10
+	push r8
 	push rcx
 	call free
 	pop  rcx
+	pop  r8
+	pop  r10
 	pop  rdx
 	pop  rbx
 	pop  rsi
 	pop  rdi
 	mov  [r8 + struct_next], r10
-	mov  rbx, [r8 + struct_next]
+	mov  rbx, r10
 	jmp  other_node_loop

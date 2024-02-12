@@ -9,7 +9,7 @@ void atoibase(char *str, char *base) {
 
 t_list *create_list(int i) {
   t_list *list = NULL;
-  int n[4] = {0, 3, 0, 0};
+  int n[4] = {0, 3, 0, 1};
 
   for (int j = 0; j < i; j++) {
     t_list *new_node = (t_list *)malloc(sizeof(t_list));
