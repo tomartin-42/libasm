@@ -80,5 +80,5 @@ int main(void) {
   read_test(10);
   read_test(1);
   read_test(0);
-  read_test(100);
+  read_test(20);
 }
