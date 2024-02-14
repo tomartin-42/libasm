@@ -12,9 +12,9 @@ else
 	SRC_DIR = ./linux
 endif
 
-SRC_FILES = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s ft__read.s ft__write.s 
-BONUS_FILES = ft__atoi_base.s ft_atoi_base.s ft__list_size.s ft__list_push_front.s \
-							ft__list_sort.s ft__list_remove_if.s
+SRC_FILES = ft_strlen.s ft_strcmp.s ft_strcpy.s ft_strdup.s ft_read.s ft_write.s 
+BONUS_FILES = ft_atoi_base.s ft_atoi_base_test.s ft_list_size.s ft_list_push_front.s \
+							ft_list_sort.s ft_list_remove_if.s
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 SRC_BONUS = $(addprefix $(SRC_DIR)/, $(BONUS_FILES))
 OBJ_DIR = obj
@@ -53,8 +53,8 @@ fclean:
 	rm -Rf $(OBJ_DIR)
 	rm -f $(NAME) 
 	rm -f *.lst
-	rm -f test
-	rm -f test_bonus
+	rm -f $(SRC_DIR)/test
+	rm -f $(SRC_DIR)/test_bonus
 	@echo "All clean!!"
 
 re: fclean all

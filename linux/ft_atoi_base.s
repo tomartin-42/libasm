@@ -1,122 +1,118 @@
+section .data
+
+section .bss
+
 section .text
 global  ft_atoi_base
 
-	; delete R8, R9, R10 and RAX
+ft_atoi_base:
+	;    Prolog
+	push rbp
+	mov  rbp, rsp
+	push r12
 
-	ft_atoi_base:        ; rdi = *str, rsi = *base
-	push rbx; save rbx (sign)
-	push r12; save r12 (base_length)
-	xor  rax, rax; total = 0
-	xor  rbx, rbx; sign = 0
-	xor  r12, r12; base_length = 0
-	jmp  base_check_loop
+	xor  r9, r9; base_length
+	xor  rax, rax; result
+	mov  rcx, 1; sign
+	;r12 conter
 
-base_check_increment:
-	inc r12; base_length++
+base_loop:
+	cmp byte [rsi, r9], 0
+	je  base_end
+	mov r8, r9
+	jmp check_dup_base
 
-base_check_loop:
-	cmp BYTE [rsi + r12], 0
-	jz  base_check_end
-	mov r8, r12; j = base_length
-
-base_check_dup_inc:
-	inc r8; j++
-
-base_check_dup_loop:
-	cmp BYTE [rsi + r8], 0; !base[j]
-	jz  base_check_correct
-	mov r9b, [rsi + r8]
-	cmp BYTE [rsi + r12], r9b; base[base_length] == base[j]
-	je  set_rax
-	jmp base_check_dup_inc
-
-base_check_correct:
-	cmp BYTE [rsi + r12], 32; base[base_length] == ' '
-	je  set_rax
-	cmp BYTE [rsi + r12], 43; base[base_length] == '+'
-	je  set_rax
-	cmp BYTE [rsi + r12], 45; base[base_length] == '-'
-	je  set_rax
-	cmp BYTE [rsi + r12], 9; base[base_length] == '\t'
-	je  set_rax
-	cmp BYTE [rsi + r12], 10; base[base_length] == '\n'
-	je  set_rax
-	cmp BYTE [rsi + r12], 13; base[base_length] == '\r'
-	je  set_rax
-	cmp BYTE [rsi + r12], 11; base[base_length] == '\v'
-	je  set_rax
-	cmp BYTE [rsi + r12], 12; base[base_length] == '\f'
-	je  set_rax
-	jmp base_check_increment
-
-base_check_end:
-	cmp r12, 1; base_length <= 1
-	jle set_rax
-	xor r8, r8; i = 0
-	jmp skip_whitespaces
-
-skip_whitespaces_inc:
-	inc r8; i++
-
-skip_whitespaces:
-	cmp BYTE [rdi + r8], 32; str[i] == ' '
-	je  skip_whitespaces_inc
-	cmp BYTE [rdi + r8], 9; str[i] == '\t'
-	je  skip_whitespaces_inc
-	cmp BYTE [rdi + r8], 10; str[i] == '\n'
-	je  skip_whitespaces_inc
-	cmp BYTE [rdi + r8], 13; str[i] == '\r'
-	je  skip_whitespaces_inc
-	cmp BYTE [rdi + r8], 11; str[i] == '\v'
-	je  skip_whitespaces_inc
-	cmp BYTE [rdi + r8], 12; str[i] == '\f'
-	je  skip_whitespaces_inc
-	jmp check_sign
-
-is_negative:
-	xor bl, 0x00000001
-
-is_positive:
+check_dup_base:
 	inc r8
+	mov r12, [rsi + r8]
+	cmp [rsi + r9], r12b
+	je  end_fail
+	cmp r12b, 0
+	je  check_base_chars
+	jmp check_dup_base
 
-check_sign:
-	cmp BYTE [rdi + r8], 45; str[i] == '-'
-	je  is_negative
-	cmp BYTE [rdi + r8], 43; str[i] == '+'
-	je  is_positive
-	jmp atoi_loop
+check_base_chars:
+	cmp byte [rsi + r9], 32; ' '
+	je  end_fail
+	cmp byte [rsi + r9], 43; '+'
+	je  end_fail
+	cmp byte [rsi + r9], 45; '-'
+	je  end_fail
+	cmp byte [rsi + r9], 9; '\t'
+	je  end_fail
+	cmp byte [rsi + r9], 10; '\n'
+	je  end_fail
+	cmp byte [rsi + r9], 13; '\r'
+	je  end_fail
+	cmp byte [rsi + r9], 11; '\v'
+	je  end_fail
+	cmp byte [rsi + r9], 12; '\f'
+	je  end_fail
+	inc r9
+	jmp base_loop
 
-atoi_increment:
-	inc r8; i++
+base_end:
+	cmp r9, 2
+	jl  end_fail
+	mov r12, -1
+
+inc:
+	inc r12
 
 atoi_loop:
-	cmp BYTE [rdi + r8], 0; str[i] == 0
+	cmp byte [rdi + r12], 32; ' '
+	je  inc
+	cmp byte [rdi + r12], 9; '\t'
+	je  inc
+	cmp byte [rdi + r12], 10; '\n'
+	je  inc
+	cmp byte [rdi + r12], 13; '\r'
+	je  inc
+	cmp byte [rdi + r12], 11; '\v'
+	je  inc
+	cmp byte [rdi + r12], 12; '\f'
+	je  inc
+	cmp byte [rdi + r12], 43; '+'
+	je  inc
+	cmp byte [rdi + r12], 45; '-'
+	je  sing
+	cmp byte [rdi + r12], 0
 	je  set_rax
-	xor r9, r9; j = 0
-	jmp atoi_idx
+	xor r10, r10
+	jmp add_num
 
-atoi_idx_inc:
-	inc r9; j++
+sing:
+	neg rcx
+	jmp inc
 
-atoi_idx:
-	mov r10b, BYTE [rsi + r9]
-	cmp r10b, 0; base[j] == 0
+end_fail:
+	pop r12
+	mov rsp, rbp
+	pop rbp
+	ret
+
+base_inc:
+	inc r10
+
+add_num:
+	mov r8b, byte [rsi + r10]
+	cmp r8b, 0
 	je  set_rax
-	cmp BYTE [rdi + r8], r10b; base[j] == str[i]
-	jne atoi_idx_inc
-
-add_to_total:
-	mul r12; total *= base_length
-	add rax, r9; total += k
-	jmp atoi_increment
+	cmp r8b, byte [rdi + r12]
+	jne base_inc
+	mul r9
+	add rax, r10
+	xor r10, r10
+	inc r12
+	jmp add_num
 
 set_rax:
-	mov rax, rax; ret = total
-	cmp rbx, 0; sign is negative
-	jz  return
-	neg rax; ret = -ret
+	cmp rcx, 1
+	je  return
+	neg rax
 
 return:
-	pop r12; restore r12
-	pop rbx; restore rbx
+	pop r12
+	mov rsp, rbp
+	pop rbp
 	ret

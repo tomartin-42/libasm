@@ -6,9 +6,9 @@
 	struct_next equ 8
 
 	section .text
-	global  ft__list_sort
+	global  ft_list_sort
 
-ft__list_sort:
+ft_list_sort:
 	push rbp
 	mov  rbp, rsp
 	push rbx

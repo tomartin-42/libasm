@@ -4,10 +4,10 @@ struct_size equ 16; sizeof t_list
 section .bss
 
 section .text
-global  ft__list_push_front
+global  ft_list_push_front
 extern  malloc
 
-ft__list_push_front:
+ft_list_push_front:
 	;    Prolog
 	push rbp
 	mov  rbp, rsp

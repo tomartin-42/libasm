@@ -1,22 +1,37 @@
 #include "test.h"
 
 void strdup_test(const char *s) {
-  char *res = ft__strdup(s);
+  char *res = ft_strdup(s);
   printf("%s - %p === %s - %p \n", s, s, res, res);
   free(res);
 }
 
 void write_test(int fd, void *buff, size_t count) {
-  char errno_str[20];
+  char str[20];
 
   write(fd, buff, count);
-  snprintf(errno_str, sizeof(errno_str), " %d", errno);
-  write(1, errno_str, strlen(errno_str));
-  ft__write(1, " - ", 3);
-  snprintf(errno_str, sizeof(errno_str), "%d ", errno);
-  write(1, errno_str, strlen(errno_str));
-  ft__write(fd, buff, count);
-  ft__write(1, "\n", 1);
+  snprintf(str, sizeof(str), " %d", errno);
+  write(1, str, strlen(str));
+  write(1, " - ", 3);
+  snprintf(str, sizeof(str), "%d ", errno);
+  ft_write(1, str, strlen(str));
+  ft_write(fd, buff, count);
+  ft_write(1, "\n", 1);
+}
+
+void read_test(int i) {
+  char buff[20];
+
+  int f = open("test_file.txt", O_RDONLY);
+  int r = read(f, buff, i);
+  lseek(f, 0, SEEK_SET);
+  printf("%s - %d", buff, r);
+  printf(" === ");
+  r = ft_read(f, buff, i);
+  lseek(f, 0, SEEK_SET);
+  printf("%d - %s", r, buff);
+  printf("\n");
+  close(f);
 }
 
 int main(void) {
@@ -40,12 +55,11 @@ int main(void) {
   STRCMP("", " ");
   printf("\n");
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "STRCPY");
-  printf("('HOLA') %s === %s\n", strcpy(buff, "HOLA"),
-         ft__strcpy(buff, "HOLA"));
-  printf("('') %s === %s\n", strcpy(buff, ""), ft__strcpy(buff, ""));
+  printf("('HOLA') %s === %s\n", strcpy(buff, "HOLA"), ft_strcpy(buff, "HOLA"));
+  printf("('') %s === %s\n", strcpy(buff, ""), ft_strcpy(buff, ""));
   printf("('AAAAAAAAAAAAAAAAAA') %s === %s\n",
          strcpy(buff, "AAAAAAAAAAAAAAAAAA"),
-         ft__strcpy(buff, "AAAAAAAAAAAAAAAAAA"));
+         ft_strcpy(buff, "AAAAAAAAAAAAAAAAAA"));
   printf("\n");
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "STRDUP");
   strdup_test("hola");
@@ -60,4 +74,11 @@ int main(void) {
   write_test(1, "", 0);
   write_test(42424242, "HOLA", 4);
   printf("\n");
+  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "READ");
+  read_test(5);
+  read_test(2);
+  read_test(10);
+  read_test(1);
+  read_test(0);
+  read_test(100);
 }

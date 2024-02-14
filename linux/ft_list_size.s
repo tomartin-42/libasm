@@ -3,9 +3,9 @@ section .data
 section .bss
 
 section .text
-global  ft__list_size
+global  ft_list_size
 
-ft__list_size:
+ft_list_size:
 	;    Prolog
 	push rbp
 	mov  rbp, rsp

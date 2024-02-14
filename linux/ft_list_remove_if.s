@@ -6,10 +6,10 @@
 	struct_next equ 8
 
 	section .text
-	global  ft__list_remove_if
+	global  ft_list_remove_if
 	extern  free
 
-ft__list_remove_if:
+ft_list_remove_if:
 	push rbp
 	mov  rbp, rsp
 	push rbx

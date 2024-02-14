@@ -4,20 +4,20 @@ section .data
 section .bss
 
 section .text
-global  ft__strdup
+global  ft_strdup
 
-extern ft__strlen
-extern ft__strcpy
+extern ft_strlen
+extern ft_strcpy
 extern malloc
 
-ft__strdup:
+ft_strdup:
 	;    Prolog
 	push rbp
 	mov  rbp, rsp
 
 	xor  rax, rax
 	push rdi
-	call ft__strlen
+	call ft_strlen
 	inc  rax
 	mov  rdi, rax
 	call malloc
@@ -25,7 +25,7 @@ ft__strdup:
 	je   end_fail
 	pop  rsi
 	mov  rdi, rax
-	call ft__strcpy
+	call ft_strcpy
 	;    Epilog
 	mov  rsp, rbp
 	pop  rbp
