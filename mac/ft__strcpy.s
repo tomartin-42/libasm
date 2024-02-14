@@ -7,6 +7,10 @@ section .text
 global  ft__strcpy
 
 ft__strcpy:
+	;    Prolog
+	push rbp
+	mov  rbp, rsp
+
 	xor rax, rax
 	mov rbx, rdi; Backup return value
 
@@ -22,4 +26,8 @@ loop:
 end:
 	mov rax, rbx
 	mov rdi, 0
+	;   Epilog
+	mov rsp, rbp
+	pop rbp
+
 	ret

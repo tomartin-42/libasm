@@ -1,30 +1,27 @@
-;ft__strlen
 section .data
 
 section .bss
 
 section .text
-global  ft__strlen
+global  ft__list_size
 
-ft__strlen:
+ft__list_size:
 	;    Prolog
 	push rbp
 	mov  rbp, rsp
+	push rdi
 
-	mov rbx, rdi
 	xor rax, rax
 
 loop:
-	cmp byte [rbx], 0
+	cmp qword rdi, 0
 	je  end
-	inc rbx
+	mov rdi, [rdi + 8]
 	inc rax
 	jmp loop
 
 end:
-	mov rdi, 0
-	;   Epilog
+	pop rdi
 	mov rsp, rbp
 	pop rbp
-
 	ret

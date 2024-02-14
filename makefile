@@ -4,7 +4,6 @@ CFLAGS = -Wall -Werror -Wextra
 
 UNAME := $(shell uname)
 
-
 ifeq ($(UNAME), Darwin)
 	NASM_FLAG = -f macho64
 	SRC_DIR = ./mac
@@ -12,7 +11,6 @@ else
 	NASM_FLAG = -f elf64
 	SRC_DIR = ./linux
 endif
-
 
 SRC_FILES = ft__strlen.s ft__strcmp.s ft__strcpy.s ft__strdup.s ft__read.s ft__write.s 
 BONUS_FILES = ft__atoi_base.s ft_atoi_base.s ft__list_size.s ft__list_push_front.s \
@@ -41,7 +39,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.s
 	@mkdir -p $(OBJ_DIR)
 	nasm -f elf64 -o $@ $< -g -l $(OBJ_DIR)/$*.lst
 
-
 $(NAME): $(OBJ)
 	ar rcs $(NAME) $(OBJ)
 
@@ -62,11 +59,11 @@ fclean:
 
 re: fclean all
 
-test:
-	gcc -no-pie $(CFLAGS) -g3 -o test test.c -L. -lasm && ./test 
+test: all
+	gcc -no-pie $(CFLAGS) -g3 -o ./test $(SRC_DIR)/test.c -L. -lasm && ./test 
 
 test_bonus: bonus
-	gcc -no-pie $(CFLAGS) -g3 -o test_bonus test_bonus.c -L. -lasm && ./test_bonus 
+	gcc -no-pie $(CFLAGS) -g3 -o ./test_bonus $(SRC_DIR)/test_bonus.c -L. -lasm && ./test_bonus 
 
 print:
 	@echo $(SRC)
@@ -81,4 +78,3 @@ print_bonus:
 	@echo $(SRC_DIR)
 	@echo $(OBJ)
 
-a: fclean bonus test_bonus

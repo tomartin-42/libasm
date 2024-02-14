@@ -7,6 +7,10 @@ section .text
 global  ft__strcmp
 
 ft__strcmp:
+	;    Prolog
+	push rbp
+	mov  rbp, rsp
+
 	xor rax, rax
 
 loop:
@@ -34,4 +38,8 @@ higth:
 
 end:
 	mov rdi, 0
+	;   Epilog
+	mov rsp, rbp
+	pop rbp
+
 	ret

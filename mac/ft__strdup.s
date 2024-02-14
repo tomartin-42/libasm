@@ -11,6 +11,10 @@ extern ft__strcpy
 extern malloc
 
 ft__strdup:
+	;    Prolog
+	push rbp
+	mov  rbp, rsp
+
 	xor  rax, rax
 	push rdi
 	call ft__strlen
@@ -22,9 +26,18 @@ ft__strdup:
 	pop  rsi
 	mov  rdi, rax
 	call ft__strcpy
+	;    Epilog
+	mov  rsp, rbp
+	pop  rbp
+
 	ret
 
 end_fail:
+	pop r9
 	xor rax, rax
 	mov rdi, 0
+	;   Epilog
+	mov rsp, rbp
+	pop rbp
+
 	ret
