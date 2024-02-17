@@ -97,7 +97,7 @@ remove_other:
 	push r10
 	push r8
 	push rcx
-	call free
+	call _free
 	pop  rcx
 	pop  r8
 	pop  r10

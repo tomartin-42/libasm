@@ -8,10 +8,14 @@ ifeq ($(UNAME), Darwin)
 	NASM_FLAG = -f macho64
 	SRC_DIR = ./mac
 	VER = "MAC VERSIOM"
+	ASM_FLAG = macho64
+	NO_PIE = ''
 else
 	NASM_FLAG = -f elf64
 	SRC_DIR = ./linux
 	VER = "LINUX VERSIOM"
+	ASM_FLAG = elf64
+	NO_PIE = -no-pie
 endif
 
 SRC_FILES = ft_strlen.s ft_strcmp.s ft_strcpy.s ft_strdup.s ft_read.s ft_write.s 
@@ -40,7 +44,7 @@ all: $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.s
 	@mkdir -p $(OBJ_DIR)
-	nasm -f elf64 -o $@ $< -g -l $(OBJ_DIR)/$*.lst
+	nasm -f $(ASM_FLAG) -o $@ $< -g -l $(OBJ_DIR)/$*.lst
 
 $(NAME): $(OBJ)
 	ar rcs $(NAME) $(OBJ)
@@ -63,11 +67,10 @@ fclean:
 re: fclean all
 
 test: all
-	#gcc -no-pie $(CFLAGS) -g3 -o ./test $(SRC_DIR)/test.c -L. -lasm && ./test 
-	gcc $(CFLAGS) -g3 -o ./test $(SRC_DIR)/test.c -L. -lasm && ./test 
+	gcc $(NO_PIE) $(CFLAGS) -g3 -o ./test $(SRC_DIR)/test.c -L. -lasm && ./test 
 
 test_bonus: bonus
-	gcc -no-pie $(CFLAGS) -g3 -o ./test_bonus $(SRC_DIR)/test_bonus.c -L. -lasm && ./test_bonus 
+	gcc $(NO_PIE) $(CFLAGS) -g3 -o ./test_bonus $(SRC_DIR)/test_bonus.c -L. -lasm && ./test_bonus 
 
 print:
 	@echo $(SRC)

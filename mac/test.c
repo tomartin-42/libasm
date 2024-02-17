@@ -1,7 +1,7 @@
 #include "test.h"
 
 void strdup_test(const char *s) {
-  char *res = _ft_strdup(s);
+  char *res = ft_strdup(s);
   printf("%s - %p === %s - %p \n", s, s, res, res);
   free(res);
 }
@@ -14,9 +14,9 @@ void write_test(int fd, void *buff, size_t count) {
   write(1, str, strlen(str));
   write(1, " - ", 3);
   snprintf(str, sizeof(str), "%d ", errno);
-  _ft_write(1, str, strlen(str));
-  _ft_write(fd, buff, count);
-  _ft_write(1, "\n", 1);
+  ft_write(1, str, strlen(str));
+  ft_write(fd, buff, count);
+  ft_write(1, "\n", 1);
 }
 
 void read_test(int i) {
@@ -27,7 +27,7 @@ void read_test(int i) {
   lseek(f, 0, SEEK_SET);
   printf("%s - %d", buff, r);
   printf(" === ");
-  r = _ft_read(f, buff, i);
+  r = ft_read(f, buff, i);
   lseek(f, 0, SEEK_SET);
   printf("%d - %s", r, buff);
   printf("\n");
@@ -55,11 +55,11 @@ int main(void) {
   STRCMP("", " ");
   printf("\n");
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "STRCPY");
-  printf("('HOLA') %s === %s\n", strcpy(buff, "HOLA"), _ft_strcpy(buff, "HOLA"));
-  printf("('') %s === %s\n", strcpy(buff, ""), _ft_strcpy(buff, ""));
+  printf("('HOLA') %s === %s\n", strcpy(buff, "HOLA"), ft_strcpy(buff, "HOLA"));
+  printf("('') %s === %s\n", strcpy(buff, ""), ft_strcpy(buff, ""));
   printf("('AAAAAAAAAAAAAAAAAA') %s === %s\n",
          strcpy(buff, "AAAAAAAAAAAAAAAAAA"),
-         _ft_strcpy(buff, "AAAAAAAAAAAAAAAAAA"));
+         ft_strcpy(buff, "AAAAAAAAAAAAAAAAAA"));
   printf("\n");
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "STRDUP");
   strdup_test("hola");

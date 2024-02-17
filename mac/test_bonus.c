@@ -3,7 +3,7 @@
 void atoibase(char *str, char *base) {
   char buff[200];
   sprintf(buff, "[%s - %s] \t%d === %d\n", str, base,
-          _ft_atoi_base_test(str, base), _ft_atoi_base(str, base));
+          ft_atoi_base_test(str, base), ft_atoi_base(str, base));
   printf("%s", buff);
 }
 
@@ -65,7 +65,7 @@ void print_list(t_list *list) {
 
 void list_size(int i) {
   t_list *list = create_list(i);
-  printf("%d === %d\n", i, _ft_list_size(list));
+  printf("%d === %d\n", i, ft_list_size(list));
   free_list(list);
 }
 
@@ -77,7 +77,7 @@ void add_node_front(int i, int data) {
   print_list(list);
   void *p_data = malloc(sizeof(int));
   *(int *)p_data = data;
-  _ft_list_push_front(&list, p_data);
+  ft_list_push_front(&list, p_data);
   printf("\t**List After**\n");
   print_list(list);
   printf("\n");
@@ -103,7 +103,7 @@ int cmp_remove(void *data, int i) {
 void listsort(int i) {
   t_list *list = create_list(i);
   print_list(list);
-  _ft_list_sort(&list, &cmp_num);
+  ft_list_sort(&list, &cmp_num);
   print_list(list);
   free_list(list);
   printf("******************************\n");
@@ -112,7 +112,7 @@ void listsort(int i) {
 void listremoveif(int i) {
   t_list *list = create_list(i);
   print_list(list);
-  _ft_list_remove_if(&list, 0, &cmp_remove, &free);
+  ft_list_remove_if(&list, 0, &cmp_remove, &free);
   printf("REMOVE %d\n", 0);
   print_list(list);
   free_list(list);
@@ -122,7 +122,7 @@ void listremoveif(int i) {
 void listremoveif_hard() {
   t_list *list = create_list_hard();
   print_list(list);
-  _ft_list_remove_if(&list, 0, &cmp_remove, &free);
+  ft_list_remove_if(&list, 0, &cmp_remove, &free);
   printf("REMOVE %d\n", 0);
   print_list(list);
   free_list(list);
