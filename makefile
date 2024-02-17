@@ -60,8 +60,8 @@ fclean:
 	rm -Rf $(OBJ_DIR)
 	rm -f $(NAME) 
 	rm -f *.lst
-	rm -f $(SRC_DIR)/test
-	rm -f $(SRC_DIR)/test_bonus
+	rm -f ./test
+	rm -f ./test_bonus
 	@echo "All clean!!"
 
 re: fclean all
