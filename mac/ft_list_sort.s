@@ -11,6 +11,8 @@
 _ft_list_sort:
 	push rbp
 	mov  rbp, rsp
+	sub  rsp, 8 ;stack 16bytes align
+
 	push rbx
 	push rsi
 	push r14
@@ -47,6 +49,7 @@ end:
 	pop r14
 	pop rsi
 	pop rbx
+	add rsp, 8
 	mov rsp, rbp
 	pop rbp
 	ret

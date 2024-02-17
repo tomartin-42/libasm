@@ -14,6 +14,7 @@ _ft_strdup:
 	;    Prolog
 	push rbp
 	mov  rbp, rsp
+	sub  rsp, 8 ;stack 16bytes align
 
 	xor  rax, rax
 	push rdi
@@ -27,6 +28,7 @@ _ft_strdup:
 	mov  rdi, rax
 	call _ft_strcpy
 	;    Epilog
+	add rsp, 8
 	mov  rsp, rbp
 	pop  rbp
 
@@ -34,6 +36,7 @@ _ft_strdup:
 
 end_fail:
 	pop r9
+	add rsp, 8
 	xor rax, rax
 	mov rdi, 0
 	;   Epilog
