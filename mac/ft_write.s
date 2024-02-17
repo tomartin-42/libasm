@@ -5,18 +5,29 @@ section .bss
 
 section .text
 global  _ft_write
+extern  ___error
 
 _ft_write:
 	;    Prolog
 	push rbp
 	mov  rbp, rsp
+	xor rax, rax
 
-	mov rax, 1; syscall to write
+	mov rax, 0x2000004; syscall to write
 	syscall
-	cmp rax, 1
-	jl  error
+	cmp rax, 0
+	jl  fail
+	;   Epilog
+	mov rsp, rbp
+	pop rbp
 
-error:
+	ret
+
+fail:
+	mov rdi, rax
+	call ___error	
+	mov [rax], rdx
+	mov rax, -1
 	;   Epilog
 	mov rsp, rbp
 	pop rbp

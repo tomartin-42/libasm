@@ -22,15 +22,18 @@ void write_test(int fd, void *buff, size_t count) {
 void read_test(int i) {
   char buff[20];
 
-  int f = open("test_file.txt", O_RDONLY);
+  //int f = open("test_file.txt", O_RDONLY);
+  int err;
+  int f = open("a.txt", O_RDONLY);
   int r = read(f, buff, i);
+  err = errno;
   lseek(f, 0, SEEK_SET);
-  printf("%s - %d", buff, r);
-  printf(" === ");
+  printf("%s - %d - ERRNO = %d\n", buff, r, err);
   r = ft_read(f, buff, i);
+  err = errno;
   lseek(f, 0, SEEK_SET);
-  printf("%d - %s", r, buff);
-  printf("\n");
+  printf("%s - %d - ERRNO = %d\n", buff, r, err);
+  printf("************************\n");
   close(f);
 }
 
