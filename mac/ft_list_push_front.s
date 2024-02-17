@@ -4,10 +4,10 @@ struct_size equ 16; sizeof t_list
 section .bss
 
 section .text
-global  ft_list_push_front
-extern  malloc
+global  _ft_list_push_front
+extern  _malloc
 
-ft_list_push_front:
+_ft_list_push_front:
 	;    Prolog
 	push rbp
 	mov  rbp, rsp
@@ -15,7 +15,7 @@ ft_list_push_front:
 	push rdi; save rdi - bengin_list
 	push rsi; save rsi - data
 	mov  rdi, struct_size
-	call malloc
+	call _malloc
 	cmp  rax, 0
 	je   end
 	pop  rsi

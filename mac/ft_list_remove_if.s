@@ -6,10 +6,10 @@
 	struct_next equ 8
 
 	section .text
-	global  ft_list_remove_if
-	extern  free
+	global  _ft_list_remove_if
+	extern  _free
 
-ft_list_remove_if:
+_ft_list_remove_if:
 	push rbp
 	mov  rbp, rsp
 	push rbx
@@ -49,20 +49,6 @@ other_node_loop:
 	mov  rbx, [r8 + struct_next]
 	jmp  other_node_loop
 
-;remove_first_node:
-	; push rdi
-	; push rsi
-	; mov  r13, rcx; save free function
-	; mov  r12, [r8]; node->data
-	; mov  rdi, r8
-	; call free; free node with free
-	; mov  rdi, r12
-	; call r13; free node->data with function
-	; pop  rsi
-	; pop  rdi
-	; mov  [rdi], rbx
-	; jmp  first_node_loop
-
 end:
 	pop r13
 	pop r12
@@ -83,7 +69,7 @@ remove:
 	pop  rcx
 	mov  rdi, r12
 	push rcx
-	call free
+	call _free
 	pop  rcx
 	pop  rdx
 	pop  rbx

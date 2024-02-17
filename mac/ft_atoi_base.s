@@ -3,9 +3,9 @@ section .data
 section .bss
 
 section .text
-global  ft_atoi_base
+global  _ft_atoi_base
 
-ft_atoi_base:
+_ft_atoi_base:
 	;    Prolog
 	push rbp
 	mov  rbp, rsp

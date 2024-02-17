@@ -7,9 +7,11 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
 	NASM_FLAG = -f macho64
 	SRC_DIR = ./mac
+	VER = "MAC VERSIOM"
 else
 	NASM_FLAG = -f elf64
 	SRC_DIR = ./linux
+	VER = "LINUX VERSIOM"
 endif
 
 SRC_FILES = ft_strlen.s ft_strcmp.s ft_strcpy.s ft_strdup.s ft_read.s ft_write.s 
@@ -26,6 +28,7 @@ ifdef BONUS
 endif
 
 all: $(NAME) 
+	@echo $(VER)
 	@echo "██╗     ██╗██████╗  █████╗ ███████╗███╗   ███╗"
 	@echo "██║     ██║██╔══██╗██╔══██╗██╔════╝████╗ ████║"
 	@echo "██║     ██║██████╔╝███████║███████╗██╔████╔██║"
@@ -60,7 +63,8 @@ fclean:
 re: fclean all
 
 test: all
-	gcc -no-pie $(CFLAGS) -g3 -o ./test $(SRC_DIR)/test.c -L. -lasm && ./test 
+	#gcc -no-pie $(CFLAGS) -g3 -o ./test $(SRC_DIR)/test.c -L. -lasm && ./test 
+	gcc $(CFLAGS) -g3 -o ./test $(SRC_DIR)/test.c -L. -lasm && ./test 
 
 test_bonus: bonus
 	gcc -no-pie $(CFLAGS) -g3 -o ./test_bonus $(SRC_DIR)/test_bonus.c -L. -lasm && ./test_bonus 

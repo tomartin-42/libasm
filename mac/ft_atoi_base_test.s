@@ -1,9 +1,9 @@
 section .text
-global  ft_atoi_base_test
+global  _ft_atoi_base_test
 
 	; delete R8, R9, R10 and RAX
 
-	ft_atoi_base_test:        ; rdi = *str, rsi = *base
+_ft_atoi_base_test:        ; rdi = *str, rsi = *base
 	push rbx; save rbx (sign)
 	push r12; save r12 (base_length)
 	xor  rax, rax; total = 0
