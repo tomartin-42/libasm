@@ -2,3 +2,4 @@ peda-session-test.txt
 peda-session-test-bonus.txt
 .gdb_history
 42libasm_tester
+*.dSYM
