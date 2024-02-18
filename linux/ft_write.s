@@ -13,7 +13,7 @@ ft_write:
 
 	mov rax, 1; syscall to write
 	syscall
-	cmp rax, 1
+	cmp rax, 0
 	jl  error
 
 error:
