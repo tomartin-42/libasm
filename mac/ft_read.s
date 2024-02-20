@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 ;ft__read
 section .data
 
@@ -15,8 +22,8 @@ _ft_read:
 
 	mov rax, 0x2000003; syscall to read
 	syscall
-	cmp byte rax, 0
-	jl  fail
+	;cmp rax, 0
+	jc  fail
 	;   Epilog
 	mov rsp, rbp
 	pop rbp
@@ -27,7 +34,7 @@ fail:
 	mov rdx, rax
 	call ___error	
 	mov [rax], rdx
-	mov rax, -1
+	mov byte rax, -1
 	;   Epilog
 	mov rsp, rbp
 	pop rbp

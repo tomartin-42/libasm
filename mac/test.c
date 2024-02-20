@@ -7,32 +7,26 @@ void strdup_test(const char *s) {
 }
 
 void write_test(int fd, void *buff, size_t count) {
-  char str[20];
+  int res;
+  errno = 0;
 
-  write(fd, buff, count);
-  snprintf(str, sizeof(str), " %d", errno);
-  write(1, str, strlen(str));
-  write(1, " - ", 3);
-  snprintf(str, sizeof(str), "%d ", errno);
-  ft_write(1, str, strlen(str));
+  res = write(fd, buff, count);
+  printf(" - RET %d - ERRNO = %d\n", res, errno);
   ft_write(fd, buff, count);
-  ft_write(1, "\n", 1);
+  printf(" - RET %d - ERRNO = %d\n", res, errno);
+  printf("************************\n");
 }
 
-void read_test(int i) {
+void read_test(char *file, int len) {
   char buff[20];
 
-  //int f = open("test_file.txt", O_RDONLY);
-  int err;
-  int f = open("a.txt", O_RDONLY);
-  int r = read(f, buff, i);
-  err = errno;
+  int f = open(file, O_RDONLY);
+  errno = 0;
+  int r = read(f, buff, len);
+  printf("%s - RET %d - ERRNO = %d\n", buff, r, errno);
   lseek(f, 0, SEEK_SET);
-  printf("%s - %d - ERRNO = %d\n", buff, r, err);
-  r = ft_read(f, buff, i);
-  err = errno;
-  lseek(f, 0, SEEK_SET);
-  printf("%s - %d - ERRNO = %d\n", buff, r, err);
+  r = ft_read(f, buff, len);
+  printf("%s - RET %d - ERRNO = %d\n", buff, r, errno);
   printf("************************\n");
   close(f);
 }
@@ -72,16 +66,16 @@ int main(void) {
   strdup_test("\n");
   printf("\n");
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "WRITE");
-  write_test(1, "HOLA", 4);
+  write_test(1000000000, "HOLA", 4);
   write_test(2, "HOLA", 4);
   write_test(1, "", 0);
   write_test(42424242, "HOLA", 4);
   printf("\n");
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "READ");
-  read_test(5);
-  read_test(2);
-  read_test(10);
-  read_test(1);
-  read_test(0);
-  read_test(20);
+  read_test("test_file.txt", 5);
+  read_test("test_file.txt", 2);
+  read_test("test_file.txt", 10);
+  read_test("test_file.txt", 1);
+  read_test("test_file.txt", 0);
+  read_test("FAIL", 20);
 }
