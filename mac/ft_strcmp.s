@@ -15,8 +15,8 @@ _ft_strcmp:
 
 loop:
 	mov al, [rdi]
-	mov bl, [rsi]
-	cmp al, bl; Check if equal
+	mov cl, [rsi]
+	cmp al, cl; Check if equal
 	jl  low
 	jg  higth
 	xor rax, rax

@@ -11,13 +11,13 @@ ft_strlen:
 	push rbp
 	mov  rbp, rsp
 
-	mov rbx, rdi
+	mov rcx, rdi
 	xor rax, rax
 
 loop:
-	cmp byte [rbx], 0
+	cmp byte [rcx], 0
 	je  end
-	inc rbx
+	inc rcx
 	inc rax
 	jmp loop
 

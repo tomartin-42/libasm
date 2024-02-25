@@ -12,7 +12,7 @@ ft_strcpy:
 	mov  rbp, rsp
 
 	xor rax, rax
-	mov rbx, rdi; Backup return value
+	mov rcx, rdi; Backup return value
 
 loop:
 	mov al, [rsi]
@@ -24,7 +24,7 @@ loop:
 	jmp loop
 
 end:
-	mov rax, rbx
+	mov rax, rcx
 	mov rdi, 0
 	;   Epilog
 	mov rsp, rbp

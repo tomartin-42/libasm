@@ -3,6 +3,7 @@
 void strdup_test(const char *s) {
   char *res = ft_strdup(s);
   printf("%s - %p === %s - %p \n", s, s, res, res);
+  printf("cmp = %d\n", strcmp(s,res));
   free(res);
 }
 
@@ -37,6 +38,7 @@ int main(void) {
 
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "STRLEN");
   STRLEN("HOLA");
+  STRLEN("123");
   STRLEN("");
   STRLEN(" ");
   printf("\n");
