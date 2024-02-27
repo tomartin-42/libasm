@@ -1,4 +1,4 @@
-;ft__read
+ift__read
 section .data
 
 section .bss

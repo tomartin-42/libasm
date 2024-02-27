@@ -1,6 +1,6 @@
 NAME = libasm.a
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -fsanitize=address#-Wall -Werror -Wextra
 
 UNAME := $(shell uname)
 

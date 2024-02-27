@@ -15,9 +15,15 @@ ft_write:
 	syscall
 	cmp rax, 0
 	jl  error
+	;   Epilog
+	mov rsp, rbp
+	pop rbp
+
+	ret
 
 error:
 	;   Epilog
+	mov rax, -1
 	mov rsp, rbp
 	pop rbp
 

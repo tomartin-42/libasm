@@ -1,7 +1,11 @@
-	;       RDI    lista
-	;       RSI    data_to_delete
-	;       RDX    function cmp
-	;       RCX    free
+	; RDI    lista
+	; RSI    data_to_delete
+	; RDX    function cmp
+	; RCX    free
+	; param2 void *data_ref [rbp - 8]
+	; param3 int(*cmp)() [rbp - 16]
+	; param4 void(*free_fct)(*void) [rbp - 24]
+
 	section .data
 	struct_next equ 8
 
@@ -12,6 +16,9 @@
 ft_list_remove_if:
 	push rbp
 	mov  rbp, rsp
+	push rsi; save in stack param2
+	push rdx; save in stack param3
+	push rcx; save in stack param4
 	push rbx
 	push r12
 	push r13
@@ -28,7 +35,7 @@ first_node_loop:
 	push rdi
 	push rsi
 	mov  rdi, [r8]
-	call rdx
+	call rdx; fct cmp
 	pop  rsi
 	pop  rdi
 	cmp  rax, 0x0
@@ -67,6 +74,9 @@ end:
 	pop r13
 	pop r12
 	pop rbx
+	pop rcx
+	pop rdx
+	pop rsi
 	mov rsp, rbp
 	pop rbp
 	ret
@@ -79,10 +89,11 @@ remove:
 	push rcx
 	mov  r12, [r8]
 	mov  rdi, r8
-	call rcx
-	pop  rcx
-	mov  rdi, r12
-	push rcx
+	push r8
+	mov  rcx, [rbp - 24]
+	call rcx; fct free
+	pop  r8
+	mov  rdi, r8
 	call free
 	pop  rcx
 	pop  rdx
