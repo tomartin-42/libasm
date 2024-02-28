@@ -1,4 +1,5 @@
 #include "test_bonus.h"
+//#include <stdin.h>
 //#include "sigsegv.hpp"
 
 //void atoibase(char *str, char *base) {
@@ -163,13 +164,27 @@ int main(void) {
 	char s[100] = {0}; char c = 0; char ref = 0;
 	for (int i = 0; i < 10; ++i)
 		s[i] = i + '0';
-	wrap_list_remove_if(&list, &c, &equal, &removee);
-	/* 1 */ check(list == NULL);
+//	wrap_list_remove_if(&list, &c, &equal, &removee);
+//	/* 1 */ check(list == NULL);
+//
+//	ft_list_push_front(&list, &c);
+//	wrap_list_remove_if(&list, &ref, &equal, &removee);
+//	printf("%p - %c - %i\n", list, c, ref);
+//* 2 */ check(list == NULL && c == 'X' && ref == 0);
 
-	ft_list_push_front(&list, &c);
-	wrap_list_remove_if(&list, &ref, &equal, &removee);
-	printf("%p - %c - %i\n", list, c, ref);
-	/* 2 */ check(list == NULL && c == 'X' && ref == 0);
+	for (int i = 9; i >= 0; --i)
+		ft_list_push_front(&list, s + i);
+
+	ref = '0';
+	wrap_list_remove_if(&list, &ref, &equal, &remove);
+	//t_list * tmp = list;
+	while(list != NULL)
+	{
+		printf("%c", *(char*)list->data);
+		tmp = list->next;
+	}
+	printf("tiene que dar 123456789/n");
+	/* 3 */ check(s[0] == 'X' && ref == '0');
 //  printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n", "FT_ATOI_BASE");
 //  atoibase("42", "0123456789");
 //  atoibase("+42", "0123456789");
