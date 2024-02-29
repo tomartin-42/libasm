@@ -1,7 +1,7 @@
-	;RDX    current_node
-	;RBX    next_node
-	;RCX    loop_start_node
-	;R9     external_function_cmp
+	;R12    loop_start_node
+	;R13    current_node
+	;RAX    aux
+	;[RBP   - 8]  external_function_cmp
 	section .data
 	struct_next equ 8
 
@@ -11,56 +11,54 @@
 ft_list_sort:
 	push rbp
 	mov  rbp, rsp
-	push rbx
 	push rsi
-	push r14
-	push r15
+	push r12
+	push r13
 
-	mov r9, rsi
 	cmp qword [rdi], 0x0; 0 nodes
 	je  end
-	mov rbx, [rdi]; strat loop node
-	cmp qword [rbx + struct_next], 0x0; 1 node
+	mov r12, [rdi]; strat loop node
+	cmp qword [r12 + struct_next], 0x0; 1 node
 	je  end
+	mov r13, [r12 + struct_next]
 
-	mov rcx, rbx
+init_loop:
+	cmp r13, 0x0; end
+	je  increment
 
-loop:
-	mov rcx, [rcx + struct_next]
-	cmp rcx, 0x0
-	je  inc_start_node
-
-prepare_cmp:
-	push rdi
-	push rsi
-	mov  rdi, [rbx]
-	mov  rsi, [rcx]
-	call r9
-	pop  rsi
-	pop  rdi
+cmp:
+	mov  rdi, r12
+	mov  rdi, [rdi]
+	mov  rsi, r13
+	mov  rsi, [rsi]
+	mov  rax, [rbp - 8]; cmp function
+	call rax
 	cmp  rax, 0x1
 	je   swap
-	jmp  loop
+	mov  rcx, [r13 + struct_next]; next
+	mov  r13, rcx
+	jmp  init_loop
 
 end:
-	pop r15
-	pop r14
+	pop r13
+	pop r12
 	pop rsi
-	pop rbx
 	mov rsp, rbp
 	pop rbp
 	ret
 
-swap:
-	mov r14, [rcx]
-	mov r15, [rbx]
-	mov [rcx], r15
-	mov [rbx], r14
-	jmp loop
-
-inc_start_node:
-	mov rbx, [rbx + struct_next]
-	cmp qword [rbx + struct_next], 0x0; last node, end loop
+increment:
+	mov r12, [r12 + struct_next]
+	cmp qword r12, 0x0; finish
 	je  end
-	mov rcx, rbx
-	jmp loop
+	mov r13, [r12 + struct_next]
+	jmp init_loop
+
+swap:
+	mov rcx, [r12]
+	mov rdx, [r13]
+	mov [r12], rdx
+	mov [r13], rcx
+	mov rcx, [r13 + struct_next]; next
+	mov r13, rcx
+	jmp init_loop
