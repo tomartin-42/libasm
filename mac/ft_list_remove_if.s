@@ -69,7 +69,9 @@ remove:
 	mov  rcx, [rbp - 32]; fct free
 	call rcx
 	mov  rdi, r12
+	push r12
 	call _free
+	pop r12
 	mov  rdi, [rbp - 8]
 	mov  [rdi], r13
 	jmp  first_node_loop

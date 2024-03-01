@@ -177,7 +177,7 @@ int main(void) {
   printf("\n");
   printf("\n\033[1mTesting: \033[0m\033[35m%s\033[0m...\n",
          "FT_LIST_REMOVE_IF");
-  listremoveif(0);
+  listremoveif(1);
   listremoveif(4);
   listremoveif(10);
   listremoveif(5);
