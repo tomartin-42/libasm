@@ -23,7 +23,7 @@ _ft_write:
 	ret
 
 fail:
-	mov  rdi, rax
+	mov  rdx, rax
 	call ___error
 	mov  [rax], rdx
 	mov  rax, -1

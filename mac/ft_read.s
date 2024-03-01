@@ -26,7 +26,7 @@ fail:
 	mov  rdx, rax
 	call ___error
 	mov  [rax], rdx
-	mov  byte rax, -1
+	mov  rax, -1
 	;    Epilog
 	mov  rsp, rbp
 	pop  rbp
