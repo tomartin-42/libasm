@@ -4,9 +4,9 @@ section .data
 section .bss
 
 section .text
-global  ft_strcpy
+global  _ft_strcpy
 
-ft_strcpy:
+_ft_strcpy:
 	;    Prolog
 	push rbp
 	mov  rbp, rsp

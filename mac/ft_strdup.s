@@ -4,24 +4,24 @@ section .data
 section .bss
 
 section .text
-global  ft_strdup
+global  _ft_strdup
 
-extern ft_strlen
-extern ft_strcpy
-extern malloc
+extern _ft_strlen
+extern _ft_strcpy
+extern _malloc
 
-ft_strdup:
+_ft_strdup:
 	xor  rax, rax
 	push rdi
-	call ft_strlen
+	call _ft_strlen
 	inc  rax
 	mov  rdi, rax
-	call malloc
+	call _malloc
 	cmp  rax, 0
 	je   end_fail
 	pop  rsi
 	mov  rdi, rax
-	call ft_strcpy
+	call _ft_strcpy
 
 	ret
 
