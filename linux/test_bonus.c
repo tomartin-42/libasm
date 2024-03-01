@@ -129,31 +129,6 @@ void listremoveif_hard() {
   printf("******************************\n");
 }
 
-
-void wrap_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(void*, void*),
-								void (*free_fct)(void *))
-{
-	int tripouille[42];
-	ft_list_remove_if(begin_list, data_ref, cmp, free_fct);
-	tripouille[41] = 42;
-}
-
-int equal(void *d1, void *d2)
-{return (*(char*)d1 - *(char*)d2);}
-
-void removee(void *s)
-{
-	*(char*)s = 'X';
-}
-
-void check(int succes)
-{
-	if (succes)
-	  printf("OK!!!!!!!!\n");
-	else
-	  printf("FAIL\n");
-}
-
 int main(void) {
 	
   srand(time(NULL));
