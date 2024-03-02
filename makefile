@@ -67,10 +67,10 @@ fclean:
 re: fclean all
 
 test: all
-	gcc $(NO_PIE) $(CFLAGS) -g3 -o ./test $(SRC_DIR)/test.c -L. -lasm && ./test 
+	gcc $(NO_PIE) $(CFLAGS) -g3 -o ./test test.c -L. -lasm && ./test 
 
 test_bonus: bonus
-	gcc $(NO_PIE) $(CFLAGS) -g3 -o ./test_bonus $(SRC_DIR)/test_bonus.c -L. -lasm && ./test_bonus 
+	gcc $(NO_PIE) $(CFLAGS) -g3 -o ./test_bonus test_bonus.c -L. -lasm && ./test_bonus 
 
 print:
 	@echo $(SRC)
