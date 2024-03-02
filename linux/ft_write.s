@@ -1,5 +1,6 @@
 ;ft__write
 section .data
+extern  __errno_location
 
 section .bss
 
@@ -10,21 +11,28 @@ ft_write:
 	;    Prolog
 	push rbp
 	mov  rbp, rsp
+	push rbx
 
 	mov rax, 1; syscall to write
 	syscall
 	cmp rax, 0
 	jl  error
 	;   Epilog
+	pop rbx
 	mov rsp, rbp
 	pop rbp
 
 	ret
 
 error:
-	;   Epilog
-	mov rax, -1
-	mov rsp, rbp
-	pop rbp
+	neg  rax
+	mov  rbx, rax
+	call __errno_location
+	mov  [rax], rbx
+	mov  rax, -1
+	;    Epilog
+	pop  rbx
+	mov  rsp, rbp
+	pop  rbp
 
 	ret
