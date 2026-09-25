@@ -1,45 +1,22 @@
-;ft__strcmp.s
-section .data
-
-section .bss
+; int ft_strcmp(const char *s1, const char *s2);
 
 section .text
-global  ft_strcmp
+global ft_strcmp
 
 ft_strcmp:
-	;    Prolog
-	push rbp
-	mov  rbp, rsp
-
-	xor rax, rax
-
-loop:
-	mov al, [rdi]
-	mov cl, [rsi]
-	cmp al, cl; Check if equal
-	jl  low
-	jg  higth
-	xor rax, rax
-	cmp byte [rdi], 0
-	je  end
-	cmp byte [rsi], 0
-	je  end
+.loop:
+	movzx eax, byte [rdi]	; Current unsigned byte from s1
+	movzx ecx, byte [rsi]	; Current unsigned byte from s2
+	cmp eax, ecx
+	jne .different
+	test al, al			; Both bytes are the null terminator
+	je .done
 	inc rdi
 	inc rsi
-	jmp loop
+	jmp .loop
 
-low:
-	mov rax, -1
-	jmp end
+.different:
+	sub eax, ecx			; Return (unsigned char)s1 - (unsigned char)s2
 
-higth:
-	mov rax, 1
-	jmp end
-
-end:
-	mov rdi, 0
-	;   Epilog
-	mov rsp, rbp
-	pop rbp
-
+.done:
 	ret

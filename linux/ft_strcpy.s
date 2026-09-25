@@ -1,33 +1,20 @@
-;ft__strcpy
-section .data
-
-section .bss
+; char *ft_strcpy(char *restrict dst, const char *restrict src);
 
 section .text
-global  ft_strcpy
+global ft_strcpy
 
 ft_strcpy:
-	;    Prolog
-	push rbp
-	mov  rbp, rsp
+	mov rcx, rdi		; Original destination pointer
 
-	xor rax, rax
-	mov rcx, rdi; Backup return value
-
-loop:
-	mov al, [rsi]
-	mov [rdi], al
-	cmp al, 0
-	je  end
+.loop:
+	mov al, [rsi]		; Read source byte
+	mov [rdi], al		; Copy byte to destination
+	test al, al		; Null terminator copied?
+	jz .done
 	inc rsi
 	inc rdi
-	jmp loop
+	jmp .loop
 
-end:
-	mov rax, rcx
-	mov rdi, 0
-	;   Epilog
-	mov rsp, rbp
-	pop rbp
-
+.done:
+	mov rax, rcx		; Return original destination
 	ret
