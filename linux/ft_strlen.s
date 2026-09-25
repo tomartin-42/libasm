@@ -1,30 +1,18 @@
-;ft__strlen
-section .data
-
-section .bss
+; size_t ft_strlen(const char *s);
 
 section .text
-global  ft_strlen
+global ft_strlen
 
 ft_strlen:
-	;    Prolog
-	push rbp
-	mov  rbp, rsp
+	mov rcx, rdi		; Current character pointer
+	xor rax, rax		; Length
 
-	mov rcx, rdi
-	xor rax, rax
-
-loop:
-	cmp byte [rcx], 0
-	je  end
+.loop:
+	cmp byte [rcx], 0	; End of string?
+	je .done
 	inc rcx
 	inc rax
-	jmp loop
+	jmp .loop
 
-end:
-	mov rdi, 0
-	;   Epilog
-	mov rsp, rbp
-	pop rbp
-
+.done:
 	ret
