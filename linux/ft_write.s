@@ -1,38 +1,22 @@
-;ft__write
-section .data
-extern  __errno_location
-
-section .bss
+; ssize_t ft_write(int fd, const void *buf, size_t count);
 
 section .text
-global  ft_write
+global ft_write
+
+extern __errno_location
 
 ft_write:
-	;    Prolog
-	push rbp
-	mov  rbp, rsp
-	push rbx
-
-	mov rax, 1; syscall to write
+	mov eax, 1			; Linux syscall number: write
 	syscall
-	cmp rax, 0
-	jl  error
-	;   Epilog
-	pop rbx
-	mov rsp, rbp
-	pop rbp
-
+	test rax, rax
+	js .error
 	ret
 
-error:
-	neg  rax
-	mov  rbx, rax
-	call __errno_location
-	mov  [rax], rbx
-	mov  rax, -1
-	;    Epilog
-	pop  rbx
-	mov  rsp, rbp
-	pop  rbp
-
+.error:
+	neg rax					; Convert -errno to positive errno
+	push rax				; Save errno and align stack per System V ABI
+	call __errno_location wrt ..plt
+	pop rcx					; Restore positive errno
+	mov [rax], ecx	; errno is a 32-bit int
+	mov rax, -1
 	ret
