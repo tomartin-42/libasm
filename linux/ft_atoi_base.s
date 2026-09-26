@@ -1,118 +1,123 @@
-section .data
-
-section .bss
+; int ft_atoi_base(char *str, char *base);
+; Flujo: valida la base, salta espacios, procesa signos, convierte y aplica el signo.
+; r8: longitud de base | r9/r10: busquedas auxiliares | r11: indice de str
+; rax: resultado | rcx: signo | dl: caracter actual
 
 section .text
-global  ft_atoi_base
+global ft_atoi_base
 
 ft_atoi_base:
-	;    Prolog
-	push rbp
-	mov  rbp, rsp
-	push r12
+	; Fase 1: valida la base mientras calcula su longitud en r8.
+	; Cada caracter debe ser unico y no puede ser un signo ni un espacio.
+	xor r8, r8			; Longitud de la base
 
-	xor  r9, r9; base_length
-	xor  rax, rax; result
-	mov  rcx, 1; sign
-	;r12 conter
+.base_loop:
+	mov al, [rsi + r8]
+	test al, al
+	jz .base_done
+	cmp al, '+'
+	je .invalid
+	cmp al, '-'
+	je .invalid
+	cmp al, ' '
+	je .invalid
+	cmp al, 9
+	jb .check_duplicates
+	cmp al, 13
+	jbe .invalid			; Reject '\t', '\n', '\v', '\f' and '\r'
 
-base_loop:
-	cmp byte [rsi, r9], 0
-	je  base_end
-	mov r8, r9
-	jmp check_dup_base
+.check_duplicates:
+	; Recorre el resto de la base buscando otra aparicion del caracter actual.
+	lea r9, [r8 + 1]
 
-check_dup_base:
-	inc r8
-	mov r12, [rsi + r8]
-	cmp [rsi + r9], r12b
-	je  end_fail
-	cmp r12b, 0
-	je  check_base_chars
-	jmp check_dup_base
-
-check_base_chars:
-	cmp byte [rsi + r9], 32; ' '
-	je  end_fail
-	cmp byte [rsi + r9], 43; '+'
-	je  end_fail
-	cmp byte [rsi + r9], 45; '-'
-	je  end_fail
-	cmp byte [rsi + r9], 9; '\t'
-	je  end_fail
-	cmp byte [rsi + r9], 10; '\n'
-	je  end_fail
-	cmp byte [rsi + r9], 13; '\r'
-	je  end_fail
-	cmp byte [rsi + r9], 11; '\v'
-	je  end_fail
-	cmp byte [rsi + r9], 12; '\f'
-	je  end_fail
+.duplicate_loop:
+	mov dl, [rsi + r9]
+	test dl, dl
+	jz .next_base_char
+	cmp al, dl
+	je .invalid
 	inc r9
-	jmp base_loop
+	jmp .duplicate_loop
 
-base_end:
-	cmp r9, 2
-	jl  end_fail
-	mov r12, -1
+.next_base_char:
+	inc r8
+	jmp .base_loop
 
-inc:
-	inc r12
+.base_done:
+	cmp r8, 2
+	jb .invalid				; Una base valida necesita al menos dos caracteres
+	xor r11, r11			; Indice dentro de str
 
-atoi_loop:
-	cmp byte [rdi + r12], 32; ' '
-	je  inc
-	cmp byte [rdi + r12], 9; '\t'
-	je  inc
-	cmp byte [rdi + r12], 10; '\n'
-	je  inc
-	cmp byte [rdi + r12], 13; '\r'
-	je  inc
-	cmp byte [rdi + r12], 11; '\v'
-	je  inc
-	cmp byte [rdi + r12], 12; '\f'
-	je  inc
-	cmp byte [rdi + r12], 43; '+'
-	je  inc
-	cmp byte [rdi + r12], 45; '-'
-	je  sing
-	cmp byte [rdi + r12], 0
-	je  set_rax
-	xor r10, r10
-	jmp add_num
+.skip_spaces:
+	; Fase 2: salta los espacios iniciales. Una vez aparezca un signo,
+	; los espacios dejan de estar permitidos y finalizaran la conversion.
+	mov dl, [rdi + r11]
+	cmp dl, ' '			; Comprueba el espacio normal (ASCII 32)
+	je .next_space	; Si lo encuentra, avanza al siguiente caracter
+	cmp dl, 9				; Inicio del rango de espacios ASCII 9-13
+	jb .sign_start	; Un valor menor que 9 no es un espacio
+	cmp dl, 13			; Final del rango de espacios ASCII 9-13
+	jbe .next_space	; Si esta entre 9 y 13, tambien debe saltarse
+	jmp .sign_start
 
-sing:
+.next_space:
+	inc r11
+	jmp .skip_spaces
+
+.sign_start:
+	mov ecx, 1			; Signo positivo por defecto
+
+.sign_loop:
+	; Fase 3: consume signos consecutivos. Cada '-' invierte el signo;
+	; cada '+' simplemente avanza al siguiente caracter.
+	mov dl, [rdi + r11]
+	cmp dl, '+'
+	je .next_sign
+	cmp dl, '-'
+	jne .convert_start
 	neg rcx
-	jmp inc
 
-end_fail:
-	pop r12
-	mov rsp, rbp
-	pop rbp
-	ret
+.next_sign:
+	inc r11
+	jmp .sign_loop
 
-base_inc:
+.convert_start:
+	xor eax, eax			; Resultado acumulado
+
+.convert_loop:
+	; Fase 4: busca el caracter actual de str dentro de la base.
+	; Su posicion sera el valor numerico del digito.
+	mov dl, [rdi + r11]
+	test dl, dl
+	jz .apply_sign
+	xor r10, r10			; Digit value
+
+.find_digit:
+	cmp r10, r8
+	je .apply_sign			; Un caracter ajeno a la base termina la conversion
+	mov r9b, [rsi + r10]
+	cmp dl, r9b
+	je .accumulate
 	inc r10
+	jmp .find_digit
 
-add_num:
-	mov r8b, byte [rsi + r10]
-	cmp r8b, 0
-	je  set_rax
-	cmp r8b, byte [rdi + r12]
-	jne base_inc
-	mul r9
+.accumulate:
+	; resultado = resultado * longitud_base + valor_digito
+	imul rax, r8
 	add rax, r10
-	xor r10, r10
-	inc r12
-	jmp add_num
+	inc r11
+	jmp .convert_loop
 
-set_rax:
-	cmp rcx, 1
-	je  return
+.apply_sign:
+	; Fase 5: aplica el signo calculado y devuelve el resultado.
+	cmp ecx, 1
+	je .done
 	neg rax
 
-return:
-	pop r12
-	mov rsp, rbp
-	pop rbp
+.done:
+	ret
+
+.invalid:
+	; Cualquier base invalida produce 0 sin intentar convertir str.
+	xor eax, eax
 	ret
