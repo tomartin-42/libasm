@@ -1,64 +1,53 @@
-	;R12    loop_start_node
-	;R13    current_node
-	;RAX    aux
-	;[RBP   - 8]  external_function_cmp
-	section .data
-	struct_next equ 8
+; void ft_list_sort(t_list **begin_list, int (*cmp)());
+; Sorts the list by swapping node data pointers.
 
-	section .text
-	global  ft_list_sort
+T_LIST_NEXT equ 8
+
+section .text
+global ft_list_sort
 
 ft_list_sort:
-	push rbp
-	mov  rbp, rsp
-	push rsi
-	push r12
-	push r13
+	push r12			; Current outer node
+	push r13			; Current comparison node
+	push r14			; Comparison callback
+								; Three pushes align the stack
 
-	cmp qword [rdi], 0x0; 0 nodes
-	je  end
-	mov r12, [rdi]; strat loop node
-	cmp qword [r12 + struct_next], 0x0; 1 node
-	je  end
-	mov r13, [r12 + struct_next]
+	test rdi, rdi
+	jz .done
+	mov r12, [rdi]		; First node
+	mov r14, rsi			; Preserve cmp across callback calls
 
-init_loop:
-	cmp r13, 0x0; end
-	je  increment
+.outer_loop:
+	test r12, r12
+	jz .done
+	mov r13, [r12 + T_LIST_NEXT]  ; Next node
 
-cmp:
-	mov  rdi, r12
-	mov  rdi, [rdi]
-	mov  rsi, r13
-	mov  rsi, [rsi]
-	mov  rax, [rbp - 8]; cmp function
-	call rax
-	cmp  rax, 0x1
-	je   swap
-	mov  rcx, [r13 + struct_next]; next
-	mov  r13, rcx
-	jmp  init_loop
+.inner_loop:
+	test r13, r13
+	jz .next_outer
 
-end:
+	mov rdi, [r12]			; current->data
+	mov rsi, [r13]			; other->data
+	call r14            ; cmp function
+
+	test eax, eax			; cmp(current->data, other->data) > 0?
+	jle .next_inner
+
+	mov rax, [r12]
+	mov rcx, [r13]
+	mov [r12], rcx
+	mov [r13], rax			; Swap data pointers
+
+.next_inner:
+	mov r13, [r13 + T_LIST_NEXT]
+	jmp .inner_loop
+
+.next_outer:
+	mov r12, [r12 + T_LIST_NEXT]
+	jmp .outer_loop
+
+.done:
+	pop r14
 	pop r13
 	pop r12
-	pop rsi
-	mov rsp, rbp
-	pop rbp
 	ret
-
-increment:
-	mov r12, [r12 + struct_next]
-	cmp qword r12, 0x0; finish
-	je  end
-	mov r13, [r12 + struct_next]
-	jmp init_loop
-
-swap:
-	mov rcx, [r12]
-	mov rdx, [r13]
-	mov [r12], rdx
-	mov [r13], rcx
-	mov rcx, [r13 + struct_next]; next
-	mov r13, rcx
-	jmp init_loop
