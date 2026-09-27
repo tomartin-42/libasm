@@ -4,7 +4,7 @@ CFLAGS = -fsanitize=address -Wall -Werror -Wextra
 
 
 NASM_FLAG = -f elf64
-SRC_DIR = ./linux
+SRC_DIR = ./src
 VER = "LINUX VERSIOM"
 ASM_FLAG = elf64
 
