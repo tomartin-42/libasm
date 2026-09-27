@@ -95,7 +95,7 @@ static void test_strlen(void) {
   const char embedded_null[] = {'a', 'b', '\0', 'x', 'y', '\0'};
   size_t i;
 
-  printf("[TEST] ft_strlen\n");
+  printf("\n[TEST] ft_strlen\n");
   check_strlen_case("empty", "");
   check_strlen_case("one character", "x");
   check_strlen_case("spaces", "   42 Madrid   ");
@@ -142,7 +142,7 @@ static void test_strcmp(void) {
   int expected;
   int actual;
 
-  printf("[TEST] ft_strcmp\n");
+  printf("\n[TEST] ft_strcmp\n");
   i = 0;
   while (i < ARRAY_LEN(cases)) {
     expected = strcmp(cases[i].left, cases[i].right);
@@ -186,7 +186,7 @@ static void test_strcpy(void) {
   const char high_bytes[] = {(char)0xff, (char)0x80, 'A', '\0'};
   size_t i;
 
-  printf("[TEST] ft_strcpy\n");
+  printf("\n[TEST] ft_strcpy\n");
   check_strcpy_case("empty", "");
   check_strcpy_case("one character", "x");
   check_strcpy_case("normal string", "Assembly is precise");
@@ -230,7 +230,7 @@ static void test_strdup(void) {
   const char high_bytes[] = {(char)0xfe, (char)0x81, 'Z', '\0'};
   size_t i;
 
-  printf("[TEST] ft_strdup\n");
+  printf("\n[TEST] ft_strdup\n");
   check_strdup_case("empty", "");
   check_strdup_case("one character", "x");
   check_strdup_case("normal string", "duplicate this string");
@@ -316,7 +316,7 @@ static void check_write_error(void) {
 static void test_write(void) {
   const unsigned char binary[] = {0x00, 0x01, 0x7f, 0x80, 0xff};
 
-  printf("[TEST] ft_write\n");
+  printf("\n[TEST] ft_write\n");
   check_write_success("zero bytes", "ignored", 0);
   check_write_success("short text", "hello", 5);
   check_write_success("binary bytes", binary, sizeof(binary));
@@ -401,7 +401,7 @@ static void check_read_error(void) {
 static void test_read(void) {
   const unsigned char binary[] = {0x00, 0x01, 0x7f, 0x80, 0xff};
 
-  printf("[TEST] ft_read\n");
+  printf("\n[TEST] ft_read\n");
   check_read_success("zero bytes", "abc", 3, 0);
   check_read_success("partial read", "abcdef", 6, 3);
   check_read_success("exact read", "abcdef", 6, 6);
