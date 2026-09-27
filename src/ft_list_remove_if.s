@@ -29,6 +29,7 @@ ft_list_remove_if:
 
 .loop:
 	; node = *link permite sustituir la cabeza y eliminar nodos consecutivos.
+	; r12(link) -> [puntero] -> rbx(node) -> siguiente
 	mov rbx, [r12]
 	test rbx, rbx 
 	jz .done
@@ -39,7 +40,9 @@ ft_list_remove_if:
 	test eax, eax
 	jne .keep
 
-	; Desenlaza la coincidencia antes de liberar sus datos y el nodo.
+	; Desenlaza la coincidencia antes de liberar sus datos y el nodo:
+	; antes: link -> nodo -> siguiente
+	; despues: link -------> siguiente
 	mov rax, [rbx + T_LIST_NEXT]
 	mov [r12], rax								; El enlace pasa a apuntar al siguiente nodo
 	mov rdi, [rbx + T_LIST_DATA]
@@ -49,6 +52,9 @@ ft_list_remove_if:
 	jmp .loop											; Mantiene el enlace por si hay otra coincidencia
 
 .keep:
+	; Conserva el nodo y mueve link hasta su campo next:
+	; nodo -> [next] -> siguiente
+	;          ^ link
 	lea r12, [rbx + T_LIST_NEXT]	; Avanza el enlace a &node->next
 	jmp .loop
 
