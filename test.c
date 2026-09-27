@@ -120,6 +120,8 @@ struct strcmp_case {
 
 /* Incluye prefijos y bytes >= 0x80 para comprobar la comparacion sin signo. */
 static void test_strcmp(void) {
+  /* Cada array contiene un byte limite y '\0' para formar una cadena C valida.
+   * Estos casos detectan si ft_strcmp compara incorrectamente con signo. */
   const char high_80[] = {(char)0x80, '\0'};
   const char high_ff[] = {(char)0xff, '\0'};
   const char low_7f[] = {(char)0x7f, '\0'};
