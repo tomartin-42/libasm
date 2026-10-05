@@ -1,6 +1,6 @@
 NAME = libasm.a
 
-CFLAGS = -fsanitize=address -Wall -Werror -Wextra
+CFLAGS = -std=gnu17 -fsanitize=address -Wall -Werror -Wextra
 
 
 NASM_FLAG = -f elf64
@@ -74,4 +74,3 @@ print_bonus:
 	@echo $(SRC_FILES)
 	@echo $(SRC_DIR)
 	@echo $(OBJ)
-
